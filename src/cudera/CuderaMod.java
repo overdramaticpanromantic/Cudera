@@ -1,9 +1,9 @@
-package template;
+package cudera;
 
 import mindustry.mod.*;
-import template.gen.*;
+import cudera.gen.*;
 
-public class ModTemplate extends Mod{
+public class CuderaMod extends Mod{
     @Override
     public void loadContent(){
         EntityRegistry.register();
