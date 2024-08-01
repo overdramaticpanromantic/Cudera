@@ -12,5 +12,7 @@ public class CuderaPalette {
     aragoniteLight = Color.valueOf("ea8c64"),
     quartzLight = Color.valueOf("ee98db"),
     algaeLight = Color.valueOf("53d56d"),
-    vitriniteLight = Color.valueOf("b2db9f");
+    vitriniteLight = Color.valueOf("b2db9f"),
+
+    dihydrateLight = Color.valueOf("ffffff");
 }
