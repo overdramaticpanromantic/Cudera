@@ -4,6 +4,8 @@ import arc.graphics.Color;
 import mindustry.content.Liquids;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
+import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.production.*;
 import mindustry.world.draw.*;
@@ -13,7 +15,7 @@ import static mindustry.type.ItemStack.with;
 public class CuderaBlocks {
     public static Block
     // crafting
-    leucoferriteKiln, siltStrainer;
+    leucoferriteKiln, siltStrainer, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer;
 
     public static void load(){
         // crafting
@@ -24,6 +26,7 @@ public class CuderaBlocks {
             size = 2;
             craftTime = 300f;
             hasItems = true;
+            hasLiquids = false;
             hasPower = true;
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.06f;
@@ -44,7 +47,57 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.silt, 1);
             consumeLiquid(Liquids.water, 0.1f);
-            consumePower(3f / 60f);
+            consumePower(0.05f);
+        }};
+        dihydrateAcidifier = new GenericCrafter("dihydrate-acidifier"){{
+            requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
+            outputLiquid = new LiquidStack(CuderaLiquids.dihydrate, 0.1f);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaLiquids.dihydrate, 1f), new DrawDefault());
+            size = 2;
+            health = 175;
+            craftTime = 240f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            ambientSound = Sounds.machine;
+            ambientSoundVolume = 0.07f;
+
+            consumeItem(CuderaItems.anthracite, 5);
+            consumeLiquid(Liquids.water, 0.1f);
+            consumePower(0.3f);
+        }};
+        aragoniteDissolver = new GenericCrafter("aragonite-dissolver"){{
+            requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.leucoferrite, 15));
+            outputLiquid = new LiquidStack(CuderaLiquids.solute, 0.1f);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaLiquids.solute, 1f), new DrawDefault());
+            size = 3;
+            health = 260;
+            craftTime = 60f / (10f / 6f);
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            ambientSound = Sounds.machine;
+            ambientSoundVolume = 0.05f;
+
+            consumeItem(CuderaItems.aragonite, 1);
+            consumeLiquid(CuderaLiquids.dihydrate, 0.4f / 3f);
+            consumePower(1f / 3f);
+        }};
+        quartzRecrystallizer = new GenericCrafter("quartz-recrystallizer"){{
+            requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.polysomate, 20));
+            outputItem = new ItemStack(CuderaItems.quartz, 1);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaLiquids.solute, 1f), new DrawDefault());
+            size = 3;
+            health = 240;
+            craftTime = 60f;
+            hasItems = false;
+            hasLiquids = true;
+            hasPower = true;
+            ambientSound = Sounds.extractLoop;
+            ambientSoundVolume = 0.08f;
+
+            consumeLiquid(CuderaLiquids.solute, 0.08f);
+            consumePower(1f / 2f);
         }};
     }
 }

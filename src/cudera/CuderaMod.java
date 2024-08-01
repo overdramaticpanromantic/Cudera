@@ -12,6 +12,7 @@ public class CuderaMod extends Mod{
         Log.info("Loaded Cudera content.");
         EntityRegistry.register();
         CuderaItems.load();
+        CuderaLiquids.load();
         CuderaBlocks.load();
     }
 }
