@@ -96,7 +96,7 @@ public class CuderaBlocks {
             ambientSound = Sounds.extractLoop;
             ambientSoundVolume = 0.08f;
 
-            consumeLiquid(CuderaLiquids.solute, 0.08f);
+            consumeLiquid(CuderaLiquids.solute, 0.06f);
             consumePower(1f / 2f);
         }};
     }
