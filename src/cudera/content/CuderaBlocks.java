@@ -40,13 +40,13 @@ public class CuderaBlocks {
                 new DrawRegion("-top")
             );
             craftEffect = new ParticleEffect(){{
-                particles = 8;
+                particles = 5;
                 lifetime = 75f;
                 colorFrom = col2;
                 colorTo = col1.a(0f);
                 sizeFrom = 0f;
-                sizeTo = 4f;
-                length = 24f;
+                sizeTo = 2f;
+                length = 16f;
                 interp = Interp.pow3In;
                 sizeInterp = Interp.pow3Out;
                 lightColor = Color.white.cpy().a(0f);
