@@ -1,7 +1,9 @@
 package cudera.content;
 
 import arc.graphics.Color;
+import arc.math.Interp;
 import mindustry.content.Liquids;
+import mindustry.entities.effect.ParticleEffect;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
@@ -14,15 +16,58 @@ import static mindustry.type.ItemStack.with;
 
 public class CuderaBlocks {
     public static Block
+    // production
+    algalPropagator,
     // crafting
     leucoferriteKiln, siltStrainer, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer;
 
     public static void load(){
+        // production
+        algalPropagator = new GenericCrafter("algal-propagator"){{
+            Color col1 = Color.valueOf("0f481c");
+            Color col2 = Color.valueOf("3ba350");
+            requirements(Category.production, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 10));
+            outputItem = new ItemStack(CuderaItems.algae, 1);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(Liquids.water, 1f),
+                new DrawDefault(),
+                new DrawCultivator(){{
+                    plantColorLight = col2;
+                    plantColor = col1;
+                    bottomColor = Color.valueOf("405556");
+                }},
+                new DrawRegion("-top")
+            );
+            craftEffect = new ParticleEffect(){{
+                particles = 8;
+                lifetime = 75f;
+                colorFrom = col2;
+                colorTo = col1.a(0f);
+                sizeFrom = 0f;
+                sizeTo = 4f;
+                length = 24f;
+                interp = Interp.pow3In;
+                sizeInterp = Interp.pow3Out;
+                lightColor = Color.white.cpy().a(0f);
+            }};
+            size = 2;
+            craftTime = 120f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+
+            consumeLiquid(Liquids.water, 0.1f);
+            consumePower(12f / 60f);
+        }};
         // crafting
         leucoferriteKiln = new GenericCrafter("leucoferrite-kiln"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 20));
             outputItems = with(CuderaItems.leucoferrite, 3, CuderaItems.polysomate, 2);
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("ffc099")));
+            drawer = new DrawMulti(
+                new DrawDefault(),
+                new DrawFlame(Color.valueOf("ffc099"))
+            );
             size = 2;
             craftTime = 300f;
             hasItems = true;
@@ -32,12 +77,17 @@ public class CuderaBlocks {
             ambientSoundVolume = 0.06f;
 
             consumeItem(CuderaItems.cyanomite, 5);
-            consumePower(0.25f);
+            consumePower(15f / 60f);
         }};
         siltStrainer = new Separator("silt-strainer"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 15, CuderaItems.polysomate, 10));
             results = with(CuderaItems.anthracite, 3, CuderaItems.vitrinite, 2);
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.water, 1f), new DrawRegion("-spinner", 1, true), new DrawDefault());
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(Liquids.water, 1f),
+                new DrawRegion("-spinner", 1, true),
+                new DrawDefault()
+            );
             size = 2;
             health = 180;
             craftTime = 60f;
@@ -47,12 +97,16 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.silt, 1);
             consumeLiquid(Liquids.water, 0.1f);
-            consumePower(0.05f);
+            consumePower(15f / 60f);
         }};
         dihydrateAcidifier = new GenericCrafter("dihydrate-acidifier"){{
             requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
             outputLiquid = new LiquidStack(CuderaFluids.dihydrate, 0.1f);
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaFluids.dihydrate, 1f), new DrawDefault());
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.dihydrate, 1f),
+                    new DrawDefault()
+            );
             size = 2;
             health = 175;
             craftTime = 240f;
@@ -64,12 +118,16 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.anthracite, 5);
             consumeLiquid(Liquids.water, 0.1f);
-            consumePower(0.3f);
+            consumePower(20f / 60f);
         }};
         aragoniteDissolver = new GenericCrafter("aragonite-dissolver"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.leucoferrite, 15));
             outputLiquid = new LiquidStack(CuderaFluids.solute, 0.1f);
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaFluids.solute, 1f), new DrawDefault());
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.solute, 1f),
+                    new DrawDefault()
+            );
             size = 3;
             health = 260;
             craftTime = 60f / (10f / 6f);
@@ -81,12 +139,16 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.aragonite, 1);
             consumeLiquid(CuderaFluids.dihydrate, 0.4f / 3f);
-            consumePower(1f / 3f);
+            consumePower(25f / 60f);
         }};
         quartzRecrystallizer = new GenericCrafter("quartz-recrystallizer"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.polysomate, 20));
             outputItem = new ItemStack(CuderaItems.quartz, 1);
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaFluids.solute, 1f), new DrawDefault());
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.solute, 1f),
+                    new DrawDefault()
+            );
             size = 3;
             health = 240;
             craftTime = 60f;
@@ -97,7 +159,7 @@ public class CuderaBlocks {
             ambientSoundVolume = 0.08f;
 
             consumeLiquid(CuderaFluids.solute, 0.06f);
-            consumePower(1f / 2f);
+            consumePower(30f / 60f);
         }};
     }
 }
