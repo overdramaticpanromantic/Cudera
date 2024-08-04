@@ -31,17 +31,17 @@ public class CuderaBlocks {
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
                 new DrawLiquidTile(Liquids.water, 1f),
-                new DrawDefault(),
                 new DrawCultivator(){{
                     plantColorLight = col2;
                     plantColor = col1;
                     bottomColor = Color.valueOf("405556");
                 }},
+                new DrawDefault(),
                 new DrawRegion("-top")
             );
             craftEffect = new ParticleEffect(){{
                 particles = 5;
-                lifetime = 75f;
+                lifetime = 60f;
                 colorFrom = col2;
                 colorTo = col1.a(0f);
                 sizeFrom = 0f;
