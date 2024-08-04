@@ -51,8 +51,8 @@ public class CuderaBlocks {
         }};
         dihydrateAcidifier = new GenericCrafter("dihydrate-acidifier"){{
             requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
-            outputLiquid = new LiquidStack(CuderaLiquids.dihydrate, 0.1f);
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaLiquids.dihydrate, 1f), new DrawDefault());
+            outputLiquid = new LiquidStack(CuderaFluids.dihydrate, 0.1f);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaFluids.dihydrate, 1f), new DrawDefault());
             size = 2;
             health = 175;
             craftTime = 240f;
@@ -68,8 +68,8 @@ public class CuderaBlocks {
         }};
         aragoniteDissolver = new GenericCrafter("aragonite-dissolver"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.leucoferrite, 15));
-            outputLiquid = new LiquidStack(CuderaLiquids.solute, 0.1f);
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaLiquids.solute, 1f), new DrawDefault());
+            outputLiquid = new LiquidStack(CuderaFluids.solute, 0.1f);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaFluids.solute, 1f), new DrawDefault());
             size = 3;
             health = 260;
             craftTime = 60f / (10f / 6f);
@@ -80,13 +80,13 @@ public class CuderaBlocks {
             ambientSoundVolume = 0.05f;
 
             consumeItem(CuderaItems.aragonite, 1);
-            consumeLiquid(CuderaLiquids.dihydrate, 0.4f / 3f);
+            consumeLiquid(CuderaFluids.dihydrate, 0.4f / 3f);
             consumePower(1f / 3f);
         }};
         quartzRecrystallizer = new GenericCrafter("quartz-recrystallizer"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.polysomate, 20));
             outputItem = new ItemStack(CuderaItems.quartz, 1);
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaLiquids.solute, 1f), new DrawDefault());
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(CuderaFluids.solute, 1f), new DrawDefault());
             size = 3;
             health = 240;
             craftTime = 60f;
@@ -96,7 +96,7 @@ public class CuderaBlocks {
             ambientSound = Sounds.extractLoop;
             ambientSoundVolume = 0.08f;
 
-            consumeLiquid(CuderaLiquids.solute, 0.06f);
+            consumeLiquid(CuderaFluids.solute, 0.06f);
             consumePower(1f / 2f);
         }};
     }

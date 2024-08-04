@@ -4,6 +4,7 @@ import arc.graphics.Color;
 
 public class CuderaPalette {
     public static Color
+    // solid
     baseLight = Color.valueOf("c7dbcf"),
     polysomateLight = Color.valueOf("c8b38e"),
     leucoferriteLight = Color.valueOf("ffbacd"),
@@ -13,6 +14,10 @@ public class CuderaPalette {
     quartzLight = Color.valueOf("ee98db"),
     algaeLight = Color.valueOf("53d56d"),
     vitriniteLight = Color.valueOf("b2db9f"),
-
-    dihydrateLight = Color.valueOf("ffffff");
+    // liquid
+    // midtone for readability in conduits
+    lightcrudeMid = Color.valueOf("c1a158"),
+    // gas
+    dihydrateLight = Color.valueOf("ffffff"),
+    dripgasLight = Color.valueOf("e69a50");
 }
