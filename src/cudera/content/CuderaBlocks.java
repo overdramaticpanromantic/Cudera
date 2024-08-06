@@ -199,7 +199,7 @@ public class CuderaBlocks {
             );
             size = 3;
             health = 260;
-            craftTime = 60f;
+            craftTime = 36f;
             hasItems = true;
             hasLiquids = true;
             hasPower = true;
@@ -207,7 +207,7 @@ public class CuderaBlocks {
             ambientSound = Sounds.extractLoop;
             ambientSoundVolume = 0.08f;
 
-            consumeItem(CuderaItems.vitrinite, 2);
+            consumeItem(CuderaItems.vitrinite, 1);
             consumePower(40f / 60f);
         }};
     }
