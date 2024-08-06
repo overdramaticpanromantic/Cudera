@@ -1,5 +1,6 @@
 package cudera.content;
 
+import arc.Core;
 import arc.graphics.Color;
 import arc.math.Interp;
 import cudera.world.draw.*;
@@ -184,31 +185,46 @@ public class CuderaBlocks {
             consumeLiquid(CuderaFluids.solute, 0.06f);
             consumePower(30f / 60f);
         }};
-        lightcrudeProcessor = new GenericCrafter("lightcrude-processor"){{
-            requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.polysomate, 25, CuderaItems.cyanomite, 15));
-            outputLiquids = LiquidStack.with(CuderaFluids.lightcrude, 0.2f, CuderaFluids.dripgas, 0.1f);
-            drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
-                    new DrawBubbles(){{
-                        color = Color.valueOf("f3d283");
-                        amount = 6;
-                        spread = 5f;
-                    }},
-                    new DrawDefault()
-            );
-            size = 3;
-            health = 260;
-            craftTime = 36f;
-            hasItems = true;
-            hasLiquids = true;
-            hasPower = true;
-            dumpExtraLiquid = false;
-            ambientSound = Sounds.extractLoop;
-            ambientSoundVolume = 0.08f;
+        lightcrudeProcessor = new GenericCrafter("lightcrude-processor"){
+            {
+                requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.polysomate, 25, CuderaItems.cyanomite, 15));
+                outputLiquids = LiquidStack.with(CuderaFluids.lightcrude, 0.2f, CuderaFluids.dripgas, 0.1f);
+                drawer = new DrawMulti(
+                        new DrawRegion("-bottom"),
+                        new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
+                        new DrawBubbles() {{
+                            color = Color.valueOf("f3d283");
+                            amount = 6;
+                            spread = 5f;
+                        }},
+                        new DrawDefault(),
+                        new DrawLiquidOutputs()
+                );
+                size = 3;
+                health = 260;
+                craftTime = 36f;
+                rotate = true;
+                rotateDraw = false;
+                invertFlip = true;
+                regionRotated1 = 2;
+                liquidOutputDirections = new int[]{1, 3};
+                hasItems = true;
+                hasLiquids = true;
+                hasPower = true;
+                dumpExtraLiquid = false;
+                ambientSound = Sounds.extractLoop;
+                ambientSoundVolume = 0.08f;
 
-            consumeItem(CuderaItems.vitrinite, 1);
-            consumePower(40f / 60f);
-        }};
+                consumeItem(CuderaItems.vitrinite, 1);
+                consumePower(40f / 60f);
+            }
+
+            @Override
+            public void loadIcon(){
+                super.loadIcon();
+                fullIcon = Core.atlas.find(name + "-full", fullIcon);
+                uiIcon = Core.atlas.find(name + "-ui", fullIcon);
+            }
+        };
     }
 }

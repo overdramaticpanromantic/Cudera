@@ -1,4 +1,4 @@
-package cudera.type;
+package cudera.world.blocks;
 
 import arc.Core;
 import arc.graphics.g2d.Draw;
