@@ -76,7 +76,7 @@ public class CuderaBlocks {
         }};
         siltStrainer = new Separator("silt-strainer"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 15, CuderaItems.polysomate, 10));
-            results = with(CuderaItems.anthracite, 3, CuderaItems.vitrinite, 2);
+            results = with(CuderaItems.anthracite, 3, CuderaItems.vitrinite, 1);
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
                 new DrawLiquidTile(Liquids.water, 1f),
