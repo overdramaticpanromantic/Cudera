@@ -17,6 +17,7 @@ public class CuderaPalette {
     // liquid
     // midtone for readability in conduits
     lightcrudeMid = Color.valueOf("c1a158"),
+    naphthaLight = Color.valueOf("bd8cde"),
     // gas
     dihydrateLight = Color.valueOf("ffffff"),
     dripgasLight = Color.valueOf("e69a50");

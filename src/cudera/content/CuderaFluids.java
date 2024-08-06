@@ -7,7 +7,7 @@ import mindustry.type.Liquid;
 public class CuderaFluids {
     public static Liquid
     // liquid
-    solute, lightcrude,
+    solute, lightcrude, naphtha,
     // gas
     dihydrate, dripgas;
 
@@ -28,6 +28,13 @@ public class CuderaFluids {
             boilPoint = 0.8f;
             viscosity = 0.65f;
             flammability = 0.3f;
+        }};
+        naphtha = new Liquid("naphtha"){{
+            color = CuderaPalette.naphthaLight;
+            gasColor = Color.valueOf("cfb4e1");
+            coolant = false;
+            boilPoint = 0.85f;
+            viscosity = 0.75f;
         }};
 
         // gas

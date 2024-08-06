@@ -20,7 +20,7 @@ public class CuderaBlocks {
     // production
     algalPropagator,
     // crafting
-    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer;
+    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor;
 
     public static void load(){
         // production
@@ -124,6 +124,10 @@ public class CuderaBlocks {
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
                 new DrawLiquidTile(CuderaFluids.dihydrate, 1f),
+                new DrawBubbles(){{
+                    color = Color.valueOf("c3bec2");
+                    amount = 8;
+                }},
                 new DrawDefault()
             );
             size = 2;
@@ -133,7 +137,7 @@ public class CuderaBlocks {
             hasLiquids = true;
             hasPower = true;
             ambientSound = CuderaSounds.bubbling;
-            ambientSoundVolume = 0.04f;
+            ambientSoundVolume = 0.025f;
 
             consumeItem(CuderaItems.anthracite, 5);
             consumeLiquid(Liquids.water, 0.1f);
@@ -179,6 +183,32 @@ public class CuderaBlocks {
 
             consumeLiquid(CuderaFluids.solute, 0.06f);
             consumePower(30f / 60f);
+        }};
+        lightcrudeProcessor = new GenericCrafter("lightcrude-processor"){{
+            requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.polysomate, 25, CuderaItems.cyanomite, 15));
+            outputLiquids = LiquidStack.with(CuderaFluids.lightcrude, 0.2f, CuderaFluids.dripgas, 0.1f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
+                    new DrawBubbles(){{
+                        color = Color.valueOf("f3d283");
+                        amount = 6;
+                        spread = 5f;
+                    }},
+                    new DrawDefault()
+            );
+            size = 3;
+            health = 260;
+            craftTime = 60f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            dumpExtraLiquid = false;
+            ambientSound = Sounds.extractLoop;
+            ambientSoundVolume = 0.08f;
+
+            consumeItem(CuderaItems.vitrinite, 2);
+            consumePower(40f / 60f);
         }};
     }
 }
