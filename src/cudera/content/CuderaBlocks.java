@@ -2,6 +2,7 @@ package cudera.content;
 
 import arc.graphics.Color;
 import arc.math.Interp;
+import cudera.world.draw.*;
 import mindustry.content.Liquids;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.gen.Sounds;
@@ -19,7 +20,7 @@ public class CuderaBlocks {
     // production
     algalPropagator,
     // crafting
-    leucoferriteKiln, siltStrainer, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer;
+    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer;
 
     public static void load(){
         // production
@@ -93,13 +94,37 @@ public class CuderaBlocks {
             consumeLiquid(Liquids.water, 0.1f);
             consumePower(15f / 60f);
         }};
+        vitriniteCompactor = new GenericCrafter("vitrinite-compactor"){{
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 20, CuderaItems.leucoferrite, 15));
+            outputItem = new ItemStack(CuderaItems.vitrinite, 2);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawHammers(){{
+                    // slight overlap between pistons - this is to make linear filtering less ass
+                    offsetX = 1.75f;
+                    moveX = 4f;
+                    moveProgress = a -> Interp.pow2Out.apply(Interp.slope.apply(a));
+                }},
+                new DrawDefault()
+            );
+            craftEffect = CuderaEffects.anthraciteCrush;
+            size = 2;
+            health = 165;
+            craftTime = 120f;
+            hasItems = true;
+            hasLiquids = false;
+            hasPower = true;
+
+            consumeItems(with(CuderaItems.anthracite, 1, CuderaItems.algae, 1));
+            consumePower(18f / 60f);
+        }};
         dihydrateAcidifier = new GenericCrafter("dihydrate-acidifier"){{
             requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
             outputLiquid = new LiquidStack(CuderaFluids.dihydrate, 0.1f);
             drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(CuderaFluids.dihydrate, 1f),
-                    new DrawDefault()
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.dihydrate, 1f),
+                new DrawDefault()
             );
             size = 2;
             health = 175;
@@ -107,8 +132,8 @@ public class CuderaBlocks {
             hasItems = true;
             hasLiquids = true;
             hasPower = true;
-            ambientSound = Sounds.machine;
-            ambientSoundVolume = 0.07f;
+            ambientSound = CuderaSounds.bubbling;
+            ambientSoundVolume = 0.04f;
 
             consumeItem(CuderaItems.anthracite, 5);
             consumeLiquid(Liquids.water, 0.1f);
@@ -118,9 +143,9 @@ public class CuderaBlocks {
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.leucoferrite, 15));
             outputLiquid = new LiquidStack(CuderaFluids.solute, 0.1f);
             drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(CuderaFluids.solute, 1f),
-                    new DrawDefault()
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.solute, 1f),
+                new DrawDefault()
             );
             size = 3;
             health = 260;
@@ -139,9 +164,9 @@ public class CuderaBlocks {
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.polysomate, 20));
             outputItem = new ItemStack(CuderaItems.quartz, 1);
             drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(CuderaFluids.solute, 1f),
-                    new DrawDefault()
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.solute, 1f),
+                new DrawDefault()
             );
             size = 3;
             health = 240;
