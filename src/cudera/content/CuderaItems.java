@@ -33,7 +33,7 @@ public class CuderaItems {
         anthracite = new Item("anthracite"){{
             color = CuderaPalette.anthraciteLight;
             cost = 0.8f;
-            flammability = 0.75f;
+            flammability = 1f;
         }};
 
         aragonite = new Item("aragonite"){{
@@ -54,7 +54,7 @@ public class CuderaItems {
         vitrinite = new Item("vitrinite"){{
             color = CuderaPalette.vitriniteLight;
             hardness = 2;
-            flammability = 1f;
+            flammability = 0.75f;
         }};
 
         cuderaItems.addAll(

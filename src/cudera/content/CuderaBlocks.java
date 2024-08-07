@@ -12,6 +12,7 @@ import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.production.*;
+import mindustry.world.consumers.ConsumeItemFlammable;
 import mindustry.world.draw.*;
 
 import static mindustry.type.ItemStack.with;
@@ -21,7 +22,7 @@ public class CuderaBlocks {
     // production
     algalPropagator,
     // crafting
-    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor;
+    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller;
 
     public static void load(){
         // production
@@ -52,6 +53,8 @@ public class CuderaBlocks {
             hasItems = true;
             hasLiquids = true;
             hasPower = true;
+            ambientSound = Sounds.machine;
+            ambientSoundVolume = 0.06f;
 
             consumeLiquid(Liquids.water, 0.1f);
             consumePower(12f / 60f);
@@ -70,7 +73,7 @@ public class CuderaBlocks {
             hasLiquids = false;
             hasPower = true;
             ambientSound = Sounds.smelter;
-            ambientSoundVolume = 0.06f;
+            ambientSoundVolume = 0.04f;
 
             consumeItem(CuderaItems.cyanomite, 5);
             consumePower(15f / 60f);
@@ -85,7 +88,7 @@ public class CuderaBlocks {
                 new DrawDefault()
             );
             size = 2;
-            health = 180;
+            health = 170;
             craftTime = 60f;
             hasItems = true;
             hasLiquids = true;
@@ -110,11 +113,13 @@ public class CuderaBlocks {
             );
             craftEffect = CuderaEffects.anthraciteCrush;
             size = 2;
-            health = 165;
+            health = 180;
             craftTime = 120f;
             hasItems = true;
             hasLiquids = false;
             hasPower = true;
+            ambientSound = Sounds.grinding;
+            ambientSoundVolume = 0.05f;
 
             consumeItems(with(CuderaItems.anthracite, 1, CuderaItems.algae, 1));
             consumePower(18f / 60f);
@@ -132,7 +137,7 @@ public class CuderaBlocks {
                 new DrawDefault()
             );
             size = 2;
-            health = 175;
+            health = 215;
             craftTime = 240f;
             hasItems = true;
             hasLiquids = true;
@@ -158,6 +163,7 @@ public class CuderaBlocks {
             hasItems = true;
             hasLiquids = true;
             hasPower = true;
+            liquidCapacity = 18;
             ambientSound = Sounds.machine;
             ambientSoundVolume = 0.05f;
 
@@ -174,11 +180,12 @@ public class CuderaBlocks {
                 new DrawDefault()
             );
             size = 3;
-            health = 240;
+            health = 285;
             craftTime = 60f;
             hasItems = false;
             hasLiquids = true;
             hasPower = true;
+            liquidCapacity = 24;
             ambientSound = Sounds.extractLoop;
             ambientSoundVolume = 0.08f;
 
@@ -192,7 +199,7 @@ public class CuderaBlocks {
                 drawer = new DrawMulti(
                         new DrawRegion("-bottom"),
                         new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
-                        new DrawBubbles() {{
+                        new DrawBubbles(){{
                             color = Color.valueOf("f3d283");
                             amount = 6;
                             spread = 5f;
@@ -201,7 +208,7 @@ public class CuderaBlocks {
                         new DrawLiquidOutputs()
                 );
                 size = 3;
-                health = 260;
+                health = 310;
                 craftTime = 36f;
                 rotate = true;
                 rotateDraw = false;
@@ -211,6 +218,8 @@ public class CuderaBlocks {
                 hasItems = true;
                 hasLiquids = true;
                 hasPower = true;
+                itemCapacity = 12;
+                liquidCapacity = 36;
                 dumpExtraLiquid = false;
                 ambientSound = Sounds.extractLoop;
                 ambientSoundVolume = 0.08f;
@@ -226,5 +235,30 @@ public class CuderaBlocks {
                 uiIcon = Core.atlas.find(name + "-ui", fullIcon);
             }
         };
+        naphthaDistiller = new GenericCrafter("naphtha-distiller"){{
+            requirements(Category.crafting, with(CuderaItems.quartz, 45, CuderaItems.leucoferrite, 40));
+            outputLiquid = new LiquidStack(CuderaFluids.naphtha, 0.1f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.naphtha, 1f),
+                    new DrawDefault(),
+                    new DrawGlowRegion(){{
+                        color = Color.valueOf("9269ad");
+                    }}
+            );
+            size = 3;
+            health = 340;
+            craftTime = 120f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            itemCapacity = 6;
+            liquidCapacity = 24;
+            ambientSound = Sounds.glow;
+            ambientSoundVolume = 0.07f;
+
+            consume(new ConsumeItemFlammable(0.5f));
+            consumeLiquid(CuderaFluids.lightcrude, 0.1f);
+        }};
     }
 }
