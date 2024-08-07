@@ -3,6 +3,7 @@ package cudera.content;
 import arc.Core;
 import arc.graphics.Color;
 import arc.math.Interp;
+import cudera.world.blocks.*;
 import cudera.world.draw.*;
 import mindustry.content.Liquids;
 import mindustry.entities.effect.ParticleEffect;
@@ -98,7 +99,7 @@ public class CuderaBlocks {
             consumeLiquid(Liquids.water, 0.1f);
             consumePower(24f / 60f);
         }};
-        vitriniteCompactor = new GenericCrafter("vitrinite-compactor"){{
+        vitriniteCompactor = new ShakeCrafter("vitrinite-compactor"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 20, CuderaItems.leucoferrite, 15));
             outputItem = new ItemStack(CuderaItems.vitrinite, 2);
             drawer = new DrawMulti(
@@ -107,7 +108,6 @@ public class CuderaBlocks {
                     // slight overlap between pistons - this is to make linear filtering less ass
                     offsetX = 1.75f;
                     moveX = 4f;
-                    shakeMag = 4f / 3f;
                     moveProgress = a -> Interp.pow2Out.apply(Interp.slope.apply(a));
                 }},
                 new DrawDefault()
