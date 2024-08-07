@@ -24,7 +24,7 @@ public class DrawHammers extends DrawBlock {
     public Interp moveProgress = Interp.slope;
 
     // DO NOT TOUCH
-    public boolean shouldShake = true;
+    public boolean shouldShake = false;
 
     @Override
     public void draw(Building build){
