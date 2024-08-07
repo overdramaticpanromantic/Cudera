@@ -57,7 +57,7 @@ public class CuderaBlocks {
             ambientSoundVolume = 0.06f;
 
             consumeLiquid(Liquids.water, 0.1f);
-            consumePower(12f / 60f);
+            consumePower(24f / 60f);
         }};
         // crafting
         leucoferriteKiln = new GenericCrafter("leucoferrite-kiln"){{
@@ -76,7 +76,7 @@ public class CuderaBlocks {
             ambientSoundVolume = 0.04f;
 
             consumeItem(CuderaItems.cyanomite, 5);
-            consumePower(15f / 60f);
+            consumePower(20f / 60f);
         }};
         siltStrainer = new Separator("silt-strainer"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 15, CuderaItems.polysomate, 10));
@@ -96,7 +96,7 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.silt, 1);
             consumeLiquid(Liquids.water, 0.1f);
-            consumePower(15f / 60f);
+            consumePower(24f / 60f);
         }};
         vitriniteCompactor = new GenericCrafter("vitrinite-compactor"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 20, CuderaItems.leucoferrite, 15));
@@ -123,7 +123,7 @@ public class CuderaBlocks {
             ambientSoundVolume = 0.05f;
 
             consumeItems(with(CuderaItems.anthracite, 1, CuderaItems.algae, 1));
-            consumePower(18f / 60f);
+            consumePower(30f / 60f);
         }};
         dihydrateAcidifier = new GenericCrafter("dihydrate-acidifier"){{
             requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
@@ -148,7 +148,7 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.anthracite, 5);
             consumeLiquid(Liquids.water, 0.1f);
-            consumePower(20f / 60f);
+            consumePower(36f / 60f);
         }};
         aragoniteDissolver = new GenericCrafter("aragonite-dissolver"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.leucoferrite, 15));
@@ -170,7 +170,7 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.aragonite, 1);
             consumeLiquid(CuderaFluids.dihydrate, 0.4f / 3f);
-            consumePower(25f / 60f);
+            consumePower(1f);
         }};
         quartzRecrystallizer = new GenericCrafter("quartz-recrystallizer"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.polysomate, 20));
@@ -191,7 +191,7 @@ public class CuderaBlocks {
             ambientSoundVolume = 0.08f;
 
             consumeLiquid(CuderaFluids.solute, 0.06f);
-            consumePower(30f / 60f);
+            consumePower(1f);
         }};
         lightcrudeProcessor = new GenericCrafter("lightcrude-processor"){
             {
@@ -226,7 +226,7 @@ public class CuderaBlocks {
                 ambientSoundVolume = 0.08f;
 
                 consumeItem(CuderaItems.vitrinite, 1);
-                consumePower(40f / 60f);
+                consumePower(1.25f);
             }
 
             @Override
@@ -252,7 +252,7 @@ public class CuderaBlocks {
             craftTime = 120f;
             hasItems = true;
             hasLiquids = true;
-            hasPower = true;
+            hasPower = false;
             itemCapacity = 6;
             liquidCapacity = 24;
             ambientSound = Sounds.glow;
