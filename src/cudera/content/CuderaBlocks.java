@@ -107,6 +107,7 @@ public class CuderaBlocks {
                     // slight overlap between pistons - this is to make linear filtering less ass
                     offsetX = 1.75f;
                     moveX = 4f;
+                    shakeMag = 4f / 3f;
                     moveProgress = a -> Interp.pow2Out.apply(Interp.slope.apply(a));
                 }},
                 new DrawDefault()
