@@ -14,6 +14,7 @@ public class CuderaPalette {
     anthraciteLight = Color.valueOf("bcbfad"),
     aragoniteLight = Color.valueOf("ea8c64"),
     quartzLight = Color.valueOf("ee98db"),
+    polymerLight = Color.valueOf("e48a95"),
     // liquid
     // midtone for readability in conduits
     lightcrudeMid = Color.valueOf("c1a158"),

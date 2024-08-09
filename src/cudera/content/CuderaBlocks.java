@@ -13,7 +13,8 @@ import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.production.*;
-import mindustry.world.consumers.ConsumeItemFlammable;
+import mindustry.world.blocks.storage.*;
+import mindustry.world.consumers.*;
 import mindustry.world.draw.*;
 
 import static mindustry.type.ItemStack.with;
@@ -23,7 +24,9 @@ public class CuderaBlocks {
     // production
     algalPropagator,
     // crafting
-    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller;
+    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
+    // storage
+    coreTide;
 
     public static void load(){
         // production
@@ -198,15 +201,15 @@ public class CuderaBlocks {
                 requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.polysomate, 25, CuderaItems.cyanomite, 15));
                 outputLiquids = LiquidStack.with(CuderaFluids.lightcrude, 0.2f, CuderaFluids.dripgas, 0.1f);
                 drawer = new DrawMulti(
-                        new DrawRegion("-bottom"),
-                        new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
-                        new DrawBubbles(){{
-                            color = Color.valueOf("f3d283");
-                            amount = 6;
-                            spread = 5f;
-                        }},
-                        new DrawDefault(),
-                        new DrawLiquidOutputs()
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
+                    new DrawBubbles(){{
+                        color = Color.valueOf("f3d283");
+                        amount = 6;
+                        spread = 5f;
+                    }},
+                    new DrawDefault(),
+                    new DrawLiquidOutputs()
                 );
                 size = 3;
                 health = 310;
@@ -240,12 +243,12 @@ public class CuderaBlocks {
             requirements(Category.crafting, with(CuderaItems.quartz, 45, CuderaItems.leucoferrite, 40));
             outputLiquid = new LiquidStack(CuderaFluids.naphtha, 0.1f);
             drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(CuderaFluids.naphtha, 1f),
-                    new DrawDefault(),
-                    new DrawGlowRegion(){{
-                        color = Color.valueOf("9269ad");
-                    }}
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.naphtha, 1f),
+                new DrawDefault(),
+                new DrawGlowRegion(){{
+                    color = Color.valueOf("9269ad");
+                }}
             );
             size = 3;
             health = 340;
@@ -261,5 +264,46 @@ public class CuderaBlocks {
             consume(new ConsumeItemFlammable(0.5f));
             consumeLiquid(CuderaFluids.lightcrude, 0.1f);
         }};
+        polymerPress = new GenericCrafter("polymer-press"){{
+            requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.cyanomite, 25));
+            outputItem = new ItemStack(CuderaItems.polymer, 1);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.naphtha, 1f),
+                new DrawDefault()
+            );
+            size = 2;
+            health = 260;
+            craftTime = 120f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            itemCapacity = 8;
+            liquidCapacity = 12;
+            ambientSound = Sounds.bioLoop;
+            ambientSoundVolume = 0.06f;
+
+            consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dihydrate, 0.05f));
+            consumePower(40f / 60f);
+        }};
+        // storage
+        coreTide = new CoreBlock("core-tide"){
+            {
+                requirements(Category.effect, with(CuderaItems.cyanomite, 650, CuderaItems.leucoferrite, 550, CuderaItems.polysomate, 450));
+                size = 2;
+                alwaysUnlocked = true;
+                // unitType = CuderaUnits.gale
+                unitCapModifier = 6;
+                isFirstTier = true;
+                health = 850;
+                itemCapacity = 2400;
+            }
+            @Override
+            public void loadIcon(){
+                super.loadIcon();
+                fullIcon = Core.atlas.find(name + "-full", fullIcon);
+                uiIcon = Core.atlas.find(name + "-ui", fullIcon);
+            }
+        };
     }
 }
