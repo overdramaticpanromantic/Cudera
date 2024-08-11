@@ -96,11 +96,10 @@ public class CuderaBlocks {
             craftTime = 60f;
             hasItems = true;
             hasLiquids = true;
-            hasPower = true;
+            hasPower = false;
 
             consumeItem(CuderaItems.silt, 1);
             consumeLiquid(Liquids.water, 0.1f);
-            consumePower(24f / 60f);
         }};
         vitriniteCompactor = new ShakeCrafter("vitrinite-compactor"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 20, CuderaItems.leucoferrite, 15));
@@ -121,12 +120,11 @@ public class CuderaBlocks {
             craftTime = 120f;
             hasItems = true;
             hasLiquids = false;
-            hasPower = true;
+            hasPower = false;
             ambientSound = Sounds.grinding;
             ambientSoundVolume = 0.05f;
 
             consumeItems(with(CuderaItems.anthracite, 1, CuderaItems.algae, 1));
-            consumePower(30f / 60f);
         }};
         dihydrateAcidifier = new GenericCrafter("dihydrate-acidifier"){{
             requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
@@ -270,8 +268,13 @@ public class CuderaBlocks {
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
                 new DrawLiquidTile(CuderaFluids.naphtha, 1f),
-                new DrawDefault()
+                new DrawDefault(),
+                new DrawPress(){{
+
+                    progress = a -> Interp.sine.apply(Interp.slope.apply(a));
+                }}
             );
+            craftEffect = CuderaEffects.polymerSquish;
             size = 2;
             health = 260;
             craftTime = 120f;
