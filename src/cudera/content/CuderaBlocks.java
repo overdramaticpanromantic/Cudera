@@ -25,6 +25,7 @@ public class CuderaBlocks {
     algalPropagator,
     // crafting
     leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
+    martensiteHardener,
     // storage
     coreTide;
 
@@ -270,7 +271,6 @@ public class CuderaBlocks {
                 new DrawLiquidTile(CuderaFluids.naphtha, 1f),
                 new DrawDefault(),
                 new DrawPress(){{
-
                     progress = a -> Interp.sine.apply(Interp.slope.apply(a));
                 }}
             );
@@ -288,6 +288,28 @@ public class CuderaBlocks {
 
             consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dihydrate, 0.05f));
             consumePower(40f / 60f);
+        }};
+        martensiteHardener = new GenericCrafter("martensite-hardener"){{
+            requirements(Category.crafting, with(CuderaItems.polymer, 55, CuderaItems.quartz, 40, CuderaItems.leucoferrite, 30));
+            outputItem = new ItemStack(CuderaItems.martensite, 1);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(Liquids.water, 1f),
+                new DrawDefault()
+            );
+            size = 3;
+            health = 360;
+            craftTime = 24f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = false;
+            itemCapacity = 15;
+            liquidCapacity = 12;
+            ambientSound = Sounds.electricHum;
+            ambientSoundVolume = 0.08f;
+
+            consumeItems(ItemStack.with(CuderaItems.leucoferrite, 2, CuderaItems.anthracite, 1));
+            consumeLiquid(Liquids.water, 0.2f);
         }};
         // storage
         coreTide = new CoreBlock("core-tide"){
