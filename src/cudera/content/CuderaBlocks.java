@@ -329,7 +329,7 @@ public class CuderaBlocks {
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.05f;
 
-            consumeItems(ItemStack.with(CuderaItems.martensite, 1, CuderaItems.polysomate, 1));
+            consumeItems(ItemStack.with(CuderaItems.martensite, 1, CuderaItems.polysomate, 2));
             consumePower(36f / 60f);
         }};
         // storage
