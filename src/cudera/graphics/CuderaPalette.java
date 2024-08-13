@@ -16,6 +16,7 @@ public class CuderaPalette {
     quartzLight = Color.valueOf("ee98db"),
     polymerLight = Color.valueOf("e48a95"),
     martensiteLight = Color.valueOf("a0b0e1"),
+    theoserineLight = Color.valueOf("eabb4a"),
     // liquid
     // midtone for readability in conduits
     lightcrudeMid = Color.valueOf("c1a158"),

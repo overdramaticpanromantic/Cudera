@@ -5,6 +5,7 @@ import arc.graphics.Color;
 import arc.math.Interp;
 import cudera.world.blocks.*;
 import cudera.world.draw.*;
+import mindustry.content.Fx;
 import mindustry.content.Liquids;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.gen.Sounds;
@@ -25,7 +26,7 @@ public class CuderaBlocks {
     algalPropagator,
     // crafting
     leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
-    martensiteHardener,
+    martensiteHardener, theoserineGalvanizer,
     // storage
     coreTide;
 
@@ -310,6 +311,26 @@ public class CuderaBlocks {
 
             consumeItems(ItemStack.with(CuderaItems.leucoferrite, 2, CuderaItems.anthracite, 1));
             consumeLiquid(Liquids.water, 0.2f);
+        }};
+        theoserineGalvanizer = new GenericCrafter("theoserine-galvanizer"){{
+            requirements(Category.crafting, with(CuderaItems.martensite, 50, CuderaItems.polymer, 45, CuderaItems.quartz, 30));
+            outputItem = new ItemStack(CuderaItems.theoserine, 2);
+            drawer = new DrawMulti(
+                    new DrawDefault(),
+                    new DrawFlame(Color.valueOf("ffef99"))
+            );
+            craftEffect = Fx.smeltsmoke;
+            size = 2;
+            health = 280;
+            craftTime = 120f;
+            hasItems = true;
+            hasLiquids = false;
+            hasPower = true;
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.05f;
+
+            consumeItems(ItemStack.with(CuderaItems.martensite, 1, CuderaItems.polysomate, 1));
+            consumePower(36f / 60f);
         }};
         // storage
         coreTide = new CoreBlock("core-tide"){
