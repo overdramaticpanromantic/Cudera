@@ -26,7 +26,7 @@ public class CuderaBlocks {
     algalPropagator,
     // crafting
     leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
-    martensiteHardener, theoserineGalvanizer,
+    martensiteHardener, theoserineGalvanizer, petroleumBoiler,
     // storage
     coreTide;
 
@@ -204,7 +204,7 @@ public class CuderaBlocks {
                     new DrawRegion("-bottom"),
                     new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
                     new DrawBubbles(){{
-                        color = Color.valueOf("f3d283");
+                        color = CuderaFluids.lightcrude.gasColor;
                         amount = 6;
                         spread = 5f;
                     }},
@@ -316,8 +316,8 @@ public class CuderaBlocks {
             requirements(Category.crafting, with(CuderaItems.martensite, 50, CuderaItems.polymer, 45, CuderaItems.quartz, 30));
             outputItem = new ItemStack(CuderaItems.theoserine, 2);
             drawer = new DrawMulti(
-                    new DrawDefault(),
-                    new DrawFlame(Color.valueOf("ffef99"))
+                new DrawDefault(),
+                new DrawFlame(Color.valueOf("ffef99"))
             );
             craftEffect = Fx.smeltsmoke;
             size = 2;
@@ -331,6 +331,32 @@ public class CuderaBlocks {
 
             consumeItems(ItemStack.with(CuderaItems.martensite, 1, CuderaItems.polysomate, 2));
             consumePower(36f / 60f);
+        }};
+        petroleumBoiler = new GenericCrafter("petroleum-boiler"){{
+            requirements(Category.crafting, with(CuderaItems.martensite, 40, CuderaItems.polymer, 35));
+            outputLiquid = new LiquidStack(CuderaFluids.petroleum, 0.1f);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.petroleum, 1f),
+                new DrawBubbles(){{
+                    color = CuderaFluids.petroleum.gasColor;
+                    amount = 6;
+                    spread = 5f;
+                }},
+                new DrawDefault()
+            );
+            size = 3;
+            health = 380;
+            craftTime = 60f;
+            hasItems = false;
+            hasLiquids = true;
+            hasPower = true;
+            liquidCapacity = 12;
+            ambientSound = Sounds.extractLoop;
+            ambientSoundVolume = 0.06f;
+
+            consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dripgas, 0.05f));
+            consumePower(1f);
         }};
         // storage
         coreTide = new CoreBlock("core-tide"){

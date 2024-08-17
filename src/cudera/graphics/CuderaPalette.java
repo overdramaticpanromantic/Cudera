@@ -18,9 +18,10 @@ public class CuderaPalette {
     martensiteLight = Color.valueOf("a0b0e1"),
     theoserineLight = Color.valueOf("eabb4a"),
     // liquid
-    // midtone for readability in conduits
-    lightcrudeMid = Color.valueOf("c1a158"),
     naphthaLight = Color.valueOf("bd8cde"),
+    lightcrudeLight = Color.valueOf("92918c"),
+    // midtone for readability in conduits
+    petroleumMid = Color.valueOf("c1a158"),
     // gas
     dihydrateLight = Color.valueOf("ffffff"),
     dripgasLight = Color.valueOf("e69a50");
