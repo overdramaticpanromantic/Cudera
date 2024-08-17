@@ -295,7 +295,13 @@ public class CuderaBlocks {
             outputItem = new ItemStack(CuderaItems.martensite, 1);
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
-                new DrawLiquidTile(Liquids.water, 1f),
+                new DrawCells(){{
+                    range = 12f;
+                    particles = 20;
+                    color = Color.valueOf("4655aa");
+                    particleColorFrom = Color.valueOf("5981d7");
+                    particleColorTo = Color.valueOf("5981d7");
+                }},
                 new DrawDefault()
             );
             size = 3;
