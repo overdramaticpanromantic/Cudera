@@ -5,7 +5,7 @@ import cudera.graphics.CuderaPalette;
 import mindustry.type.Item;
 
 public class CuderaItems {
-    public static Item cyanomite, leucoferrite, polysomate, silt, anthracite, algae, vitrinite, aragonite, quartz, polymer, martensite, theoserine;
+    public static Item cyanomite, leucoferrite, polysomate, silt, anthracite, algae, vitrinite, aragonite, quartz, polymer, martensite, theoserine, thermoplast, plasteel;
     public static final Seq<Item> cuderaItems = new Seq<>();
     public static void load(){
         cyanomite = new Item("cyanomite"){{
@@ -60,10 +60,17 @@ public class CuderaItems {
             color = CuderaPalette.theoserineLight;
             cost = 2.5f;
         }};
-
+        thermoplast = new Item("thermoplast"){{
+            color = CuderaPalette.thermoplastLight;
+            cost = 2.35f;
+        }};
+        plasteel = new Item("plasteel"){{
+            color = CuderaPalette.plasteelLight;
+            cost = 2.8f;
+        }};
 
         cuderaItems.addAll(
-            cyanomite, leucoferrite, polysomate, silt, anthracite, aragonite, quartz, algae, vitrinite, polymer, martensite, theoserine
+            cyanomite, leucoferrite, polysomate, silt, anthracite, aragonite, quartz, algae, vitrinite, polymer, martensite, theoserine, thermoplast, plasteel
         );
     }
 }

@@ -7,6 +7,7 @@ import cudera.world.blocks.*;
 import cudera.world.draw.*;
 import mindustry.content.Fx;
 import mindustry.content.Liquids;
+import mindustry.entities.effect.ExplosionEffect;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
@@ -26,7 +27,7 @@ public class CuderaBlocks {
     algalPropagator,
     // crafting
     leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
-    martensiteHardener, theoserineGalvanizer, petroleumBoiler,
+    martensiteHardener, theoserineGalvanizer, petroleumBoiler, thermoplastCondenser, plasteelFoundry,
     // storage
     coreTide;
 
@@ -363,6 +364,67 @@ public class CuderaBlocks {
 
             consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dripgas, 0.05f));
             consumePower(1f);
+        }};
+        thermoplastCondenser = new GenericCrafter("thermoplast-condenser"){{
+            requirements(Category.crafting, with(CuderaItems.theoserine, 35, CuderaItems.polymer, 25, CuderaItems.polysomate, 20));
+            outputItem = new ItemStack(CuderaItems.thermoplast, 1);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.petroleum, 1f),
+                    new DrawDefault()
+            );
+            craftEffect = CuderaEffects.thermoplastCraft;
+            size = 2;
+            health = 320;
+            craftTime = 60f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            itemCapacity = 6;
+            liquidCapacity = 12;
+            ambientSound = Sounds.machine;
+            ambientSoundVolume = 0.06f;
+
+            consumeItem(CuderaItems.quartz, 1);
+            consumeLiquid(CuderaFluids.petroleum, 0.1f);
+            consumePower(1f);
+        }};
+        plasteelFoundry = new GenericCrafter("plasteel-foundry"){{
+            requirements(Category.crafting, with(CuderaItems.thermoplast, 65, CuderaItems.martensite, 50, CuderaItems.quartz, 35));
+            outputItem = new ItemStack(CuderaItems.plasteel, 2);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawCrucibleFlame(),
+                    new DrawDefault()
+            );
+            craftEffect = new ExplosionEffect(){{
+                layer = 30.002f;
+                lifetime = 60f;
+                waveLife = 8f;
+                waveStroke = 2f;
+                waveRad = 8f;
+                waveRadBase = 1f;
+                sparkStroke = 1f;
+                sparkRad = 12f;
+                sparkLen = 3f;
+                smokeSize = 3f;
+                smokes = 6;
+                sparks = 8;
+            }};
+            size = 3;
+            health = 420;
+            craftTime = 90f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            itemCapacity = 12;
+            liquidCapacity = 12;
+            ambientSound = CuderaSounds.plasteelHum;
+            ambientSoundVolume = 0.06f;
+
+            consumeItems(ItemStack.with(CuderaItems.martensite, 2, CuderaItems.thermoplast, 2));
+            consumeLiquid(CuderaFluids.dihydrate, 0.1f);
+            consumePower(90f / 60f);
         }};
         // storage
         coreTide = new CoreBlock("core-tide"){

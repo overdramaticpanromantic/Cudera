@@ -17,6 +17,8 @@ public class CuderaPalette {
     polymerLight = Color.valueOf("e48a95"),
     martensiteLight = Color.valueOf("a0b0e1"),
     theoserineLight = Color.valueOf("eabb4a"),
+    thermoplastLight = Color.valueOf("dd69ce"),
+    plasteelLight = Color.valueOf("95d6dd"),
     // liquid
     naphthaLight = Color.valueOf("bd8cde"),
     lightcrudeLight = Color.valueOf("92918c"),
