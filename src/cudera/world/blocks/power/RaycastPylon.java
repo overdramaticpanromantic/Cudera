@@ -1,4 +1,4 @@
-package cudera.world.blocks;
+package cudera.world.blocks.power;
 
 import arc.Core;
 import arc.graphics.g2d.Draw;

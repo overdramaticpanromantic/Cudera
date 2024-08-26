@@ -15,5 +15,6 @@ public class CuderaMod extends Mod{
         CuderaItems.load();
         CuderaFluids.load();
         CuderaBlocks.load();
+        CuderaWeathers.load();
     }
 }

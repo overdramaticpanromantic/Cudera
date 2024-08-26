@@ -11,15 +11,15 @@ public class CuderaItems {
         cyanomite = new Item("cyanomite"){{
             color = CuderaPalette.baseLight;
             hardness = 1;
-            cost = 0.6f;
+            cost = 1f;
         }};
         leucoferrite = new Item("leucoferrite"){{
             color = CuderaPalette.leucoferriteLight;
-            cost = 0.8f;
+            cost = 1.2f;
         }};
         polysomate = new Item("polysomate"){{
             color = CuderaPalette.polysomateLight;
-            cost = 1f;
+            cost = 1.3f;
         }};
         silt = new Item("silt"){{
             color = CuderaPalette.siltLight;
@@ -37,7 +37,7 @@ public class CuderaItems {
         }};
         anthracite = new Item("anthracite"){{
             color = CuderaPalette.anthraciteLight;
-            cost = 1.3f;
+            cost = 1.45f;
             flammability = 1f;
         }};
         aragonite = new Item("aragonite"){{
@@ -46,15 +46,15 @@ public class CuderaItems {
         }};
         quartz = new Item("quartz"){{
             color = CuderaPalette.quartzLight;
-            cost = 1.5f;
+            cost = 1.6f;
         }};
         polymer = new Item("polymer"){{
             color = CuderaPalette.polymerLight;
-            cost = 1.9f;
+            cost = 1.7f;
         }};
         martensite = new Item("martensite"){{
             color = CuderaPalette.martensiteLight;
-            cost = 2.2f;
+            cost = 2f;
         }};
         theoserine = new Item("theoserine"){{
             color = CuderaPalette.theoserineLight;
@@ -62,11 +62,11 @@ public class CuderaItems {
         }};
         thermoplast = new Item("thermoplast"){{
             color = CuderaPalette.thermoplastLight;
-            cost = 2.35f;
+            cost = 2.6f;
         }};
         plasteel = new Item("plasteel"){{
             color = CuderaPalette.plasteelLight;
-            cost = 2.8f;
+            cost = 3f;
         }};
 
         cuderaItems.addAll(

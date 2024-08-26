@@ -3,19 +3,19 @@ package cudera.content;
 import arc.Core;
 import arc.graphics.Color;
 import arc.math.Interp;
-import cudera.world.blocks.*;
+import cudera.world.blocks.crafting.*;
+import cudera.world.blocks.storage.*;
 import cudera.world.draw.*;
 import mindustry.content.Fx;
 import mindustry.content.Liquids;
-import mindustry.entities.effect.ExplosionEffect;
-import mindustry.entities.effect.ParticleEffect;
+import mindustry.entities.effect.*;
 import mindustry.gen.Sounds;
 import mindustry.type.Category;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.Block;
+import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.production.*;
-import mindustry.world.blocks.storage.*;
 import mindustry.world.consumers.*;
 import mindustry.world.draw.*;
 
@@ -23,6 +23,10 @@ import static mindustry.type.ItemStack.with;
 
 public class CuderaBlocks {
     public static Block
+    // environment - walls
+    siltWall,
+    // environment - floors
+    siltFloor,
     // production
     algalPropagator,
     // crafting
@@ -32,8 +36,16 @@ public class CuderaBlocks {
     coreTide;
 
     public static void load(){
+        // environment - walls
+        siltWall = new StaticWall("silt-wall"){{
+            variants = 3;
+        }};
+        // environment - floors
+        siltFloor = new Floor("silt-floor"){{
+            variants = 11;
+        }};
         // production
-        algalPropagator = new GenericCrafter("algal-propagator"){{
+        algalPropagator = new HeatedCrafter("algal-propagator"){{
             Color col1 = Color.valueOf("0f481c");
             Color col2 = Color.valueOf("3ba350");
             requirements(Category.production, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 10));
@@ -67,7 +79,7 @@ public class CuderaBlocks {
             consumePower(24f / 60f);
         }};
         // crafting
-        leucoferriteKiln = new GenericCrafter("leucoferrite-kiln"){{
+        leucoferriteKiln = new HeatedCrafter("leucoferrite-kiln"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 20));
             outputItems = with(CuderaItems.leucoferrite, 3, CuderaItems.polysomate, 2);
             drawer = new DrawMulti(
@@ -84,6 +96,9 @@ public class CuderaBlocks {
 
             consumeItem(CuderaItems.cyanomite, 5);
             consumePower(20f / 60f);
+
+            heated = true;
+            heatRadius = 24f;
         }};
         siltStrainer = new Separator("silt-strainer"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 15, CuderaItems.polysomate, 10));
@@ -129,7 +144,7 @@ public class CuderaBlocks {
 
             consumeItems(with(CuderaItems.anthracite, 1, CuderaItems.algae, 1));
         }};
-        dihydrateAcidifier = new GenericCrafter("dihydrate-acidifier"){{
+        dihydrateAcidifier = new HeatedCrafter("dihydrate-acidifier"){{
             requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
             outputLiquid = new LiquidStack(CuderaFluids.dihydrate, 0.1f);
             drawer = new DrawMulti(
@@ -154,7 +169,7 @@ public class CuderaBlocks {
             consumeLiquid(Liquids.water, 0.1f);
             consumePower(36f / 60f);
         }};
-        aragoniteDissolver = new GenericCrafter("aragonite-dissolver"){{
+        aragoniteDissolver = new HeatedCrafter("aragonite-dissolver"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.leucoferrite, 15));
             outputLiquid = new LiquidStack(CuderaFluids.solute, 0.1f);
             drawer = new DrawMulti(
@@ -176,7 +191,7 @@ public class CuderaBlocks {
             consumeLiquid(CuderaFluids.dihydrate, 0.4f / 3f);
             consumePower(1f);
         }};
-        quartzRecrystallizer = new GenericCrafter("quartz-recrystallizer"){{
+        quartzRecrystallizer = new HeatedCrafter("quartz-recrystallizer"){{
             requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.polysomate, 20));
             outputItem = new ItemStack(CuderaItems.quartz, 1);
             drawer = new DrawMulti(
@@ -197,7 +212,7 @@ public class CuderaBlocks {
             consumeLiquid(CuderaFluids.solute, 0.06f);
             consumePower(1f);
         }};
-        lightcrudeProcessor = new GenericCrafter("lightcrude-processor"){
+        lightcrudeProcessor = new HeatedCrafter("lightcrude-processor"){
             {
                 requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.polysomate, 25, CuderaItems.cyanomite, 15));
                 outputLiquids = LiquidStack.with(CuderaFluids.lightcrude, 0.2f, CuderaFluids.dripgas, 0.1f);
@@ -231,6 +246,9 @@ public class CuderaBlocks {
 
                 consumeItem(CuderaItems.vitrinite, 1);
                 consumePower(1.25f);
+
+                heated = true;
+                heatRadius = 28f;
             }
 
             @Override
@@ -240,7 +258,7 @@ public class CuderaBlocks {
                 uiIcon = Core.atlas.find(name + "-ui", fullIcon);
             }
         };
-        naphthaDistiller = new GenericCrafter("naphtha-distiller"){{
+        naphthaDistiller = new HeatedCrafter("naphtha-distiller"){{
             requirements(Category.crafting, with(CuderaItems.quartz, 45, CuderaItems.leucoferrite, 40));
             outputLiquid = new LiquidStack(CuderaFluids.naphtha, 0.1f);
             drawer = new DrawMulti(
@@ -264,8 +282,11 @@ public class CuderaBlocks {
 
             consume(new ConsumeItemFlammable(0.5f));
             consumeLiquid(CuderaFluids.lightcrude, 0.1f);
+
+            heated = true;
+            heatRadius = 32f;
         }};
-        polymerPress = new GenericCrafter("polymer-press"){{
+        polymerPress = new HeatedCrafter("polymer-press"){{
             requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.cyanomite, 25));
             outputItem = new ItemStack(CuderaItems.polymer, 1);
             drawer = new DrawMulti(
@@ -291,7 +312,7 @@ public class CuderaBlocks {
             consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dihydrate, 0.05f));
             consumePower(40f / 60f);
         }};
-        martensiteHardener = new GenericCrafter("martensite-hardener"){{
+        martensiteHardener = new HeatedCrafter("martensite-hardener"){{
             requirements(Category.crafting, with(CuderaItems.polymer, 55, CuderaItems.quartz, 40, CuderaItems.leucoferrite, 30));
             outputItem = new ItemStack(CuderaItems.martensite, 1);
             drawer = new DrawMulti(
@@ -319,7 +340,7 @@ public class CuderaBlocks {
             consumeItems(ItemStack.with(CuderaItems.leucoferrite, 2, CuderaItems.anthracite, 1));
             consumeLiquid(Liquids.water, 0.2f);
         }};
-        theoserineGalvanizer = new GenericCrafter("theoserine-galvanizer"){{
+        theoserineGalvanizer = new HeatedCrafter("theoserine-galvanizer"){{
             requirements(Category.crafting, with(CuderaItems.martensite, 50, CuderaItems.polymer, 45, CuderaItems.quartz, 30));
             outputItem = new ItemStack(CuderaItems.theoserine, 2);
             drawer = new DrawMulti(
@@ -339,7 +360,7 @@ public class CuderaBlocks {
             consumeItems(ItemStack.with(CuderaItems.martensite, 1, CuderaItems.polysomate, 2));
             consumePower(36f / 60f);
         }};
-        petroleumBoiler = new GenericCrafter("petroleum-boiler"){{
+        petroleumBoiler = new HeatedCrafter("petroleum-boiler"){{
             requirements(Category.crafting, with(CuderaItems.martensite, 40, CuderaItems.polymer, 35));
             outputLiquid = new LiquidStack(CuderaFluids.petroleum, 0.1f);
             drawer = new DrawMulti(
@@ -364,8 +385,11 @@ public class CuderaBlocks {
 
             consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dripgas, 0.05f));
             consumePower(1f);
+
+            heated = true;
+            heatRadius = 32f;
         }};
-        thermoplastCondenser = new GenericCrafter("thermoplast-condenser"){{
+        thermoplastCondenser = new HeatedCrafter("thermoplast-condenser"){{
             requirements(Category.crafting, with(CuderaItems.theoserine, 35, CuderaItems.polymer, 25, CuderaItems.polysomate, 20));
             outputItem = new ItemStack(CuderaItems.thermoplast, 1);
             drawer = new DrawMulti(
@@ -389,7 +413,7 @@ public class CuderaBlocks {
             consumeLiquid(CuderaFluids.petroleum, 0.1f);
             consumePower(1f);
         }};
-        plasteelFoundry = new GenericCrafter("plasteel-foundry"){{
+        plasteelFoundry = new HeatedCrafter("plasteel-foundry"){{
             requirements(Category.crafting, with(CuderaItems.thermoplast, 65, CuderaItems.martensite, 50, CuderaItems.quartz, 35));
             outputItem = new ItemStack(CuderaItems.plasteel, 2);
             drawer = new DrawMulti(
@@ -425,25 +449,23 @@ public class CuderaBlocks {
             consumeItems(ItemStack.with(CuderaItems.martensite, 2, CuderaItems.thermoplast, 2));
             consumeLiquid(CuderaFluids.dihydrate, 0.1f);
             consumePower(90f / 60f);
+
+            heated = true;
+            heatRadius = 36f;
         }};
         // storage
-        coreTide = new CoreBlock("core-tide"){
-            {
-                requirements(Category.effect, with(CuderaItems.cyanomite, 650, CuderaItems.leucoferrite, 550, CuderaItems.polysomate, 450));
-                size = 2;
-                alwaysUnlocked = true;
-                // unitType = CuderaUnits.gale
-                unitCapModifier = 6;
-                isFirstTier = true;
-                health = 850;
-                itemCapacity = 2400;
-            }
-            @Override
-            public void loadIcon(){
-                super.loadIcon();
-                fullIcon = Core.atlas.find(name + "-full", fullIcon);
-                uiIcon = Core.atlas.find(name + "-ui", fullIcon);
-            }
-        };
+        coreTide = new HeatedCore("core-tide"){{
+            requirements(Category.effect, with(CuderaItems.cyanomite, 650, CuderaItems.leucoferrite, 550, CuderaItems.polysomate, 450));
+            size = 2;
+            alwaysUnlocked = true;
+            // unitType = CuderaUnits.gale
+            unitCapModifier = 6;
+            isFirstTier = true;
+            health = 850;
+            itemCapacity = 2400;
+
+            heated = true;
+            heatRadius = 60f;
+        }};
     }
 }
