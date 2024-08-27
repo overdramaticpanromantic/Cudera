@@ -8,6 +8,10 @@ import cudera.world.blocks.HeatedBlock;
 import mindustry.Vars;
 import mindustry.type.weather.ParticleWeather;
 import mindustry.gen.*;
+import mindustry.world.Tile;
+
+// Damages blocks every damageTime frames.
+// The majority of this code is by sh1penfire and uujuju/Liz.
 
 public class BlizzardWeather extends ParticleWeather {
     public TextureRegion snowRegion;
@@ -29,7 +33,13 @@ public class BlizzardWeather extends ParticleWeather {
             Building b1 = Vars.world.tile(x, y).build;
             if (b1 == null) return;
             if (!(b1 instanceof HeatedBlock b2 && b2.isHeated())) {
-                b1.damage(b1.maxHealth / (6 * Mathf.pow(b1.maxHealth, 0.333f) * Mathf.pow(b1.block.size, 2f)));
+                boolean cold = true;
+                for (Tile tile : Vars.world.tiles) {
+                    if (tile.build instanceof HeatedBlock b3 && b3.isHeating(b1.x, b1.y)) cold = false;
+                }
+                if (cold) {
+                    b1.damage(b1.maxHealth / (6 * Mathf.pow(b1.maxHealth, 0.333f) * Mathf.pow(b1.block.size, 2f)));
+                }
             }
         });
     }

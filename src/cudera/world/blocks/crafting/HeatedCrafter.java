@@ -1,5 +1,6 @@
 package cudera.world.blocks.crafting;
 
+import arc.math.Mathf;
 import cudera.world.blocks.HeatedBlock;
 import cudera.world.meta.CuderaStats;
 import mindustry.Vars;
@@ -39,6 +40,11 @@ public class HeatedCrafter extends GenericCrafter {
         @Override
         public boolean isHeated() {
             return heated;
+        }
+
+        @Override
+        public boolean isHeating(float x, float y) {
+            return Mathf.dst(this.x, this.y, x, y) <= heatRadius;
         }
     }
 }

@@ -1,8 +1,14 @@
 package cudera.world.blocks.storage;
 
 import arc.Core;
+import arc.math.Mathf;
 import cudera.world.blocks.HeatedBlock;
+import cudera.world.meta.CuderaStats;
+import mindustry.Vars;
+import mindustry.graphics.Drawf;
+import mindustry.graphics.Pal;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.meta.StatUnit;
 
 // Literally just CoreBlock but it doesn't take blizzard damage.
 // Also, semi-fixes icons to work with linear filtering.
@@ -25,10 +31,32 @@ public class HeatedCore extends CoreBlock {
         uiIcon = Core.atlas.find(name + "-ui", fullIcon);
     }
 
+    @Override
+    public void drawPlace(int x, int y, int rotation, boolean valid) {
+        super.drawPlace(x, y, rotation, valid);
+        if (heated) {
+            Drawf.dashCircle(x * Vars.tilesize + this.offset, y * Vars.tilesize + this.offset, heatRadius, Pal.placing);
+        }
+    }
+
+    @Override
+    public void setStats() {
+        super.setStats();
+        stats.add(CuderaStats.heated, heated);
+        if (heated) {
+            stats.add(CuderaStats.heatRadius, heatRadius / 8f, StatUnit.blocks);
+        }
+    }
+
     public class HeatedCoreBuild extends CoreBuild implements HeatedBlock {
         @Override
         public boolean isHeated() {
             return heated;
+        }
+
+        @Override
+        public boolean isHeating(float x, float y) {
+            return Mathf.dst(this.x, this.y, x, y) <= heatRadius;
         }
     }
 }
