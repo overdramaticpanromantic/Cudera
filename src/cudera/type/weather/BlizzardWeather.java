@@ -1,7 +1,4 @@
 package cudera.type.weather;
-
-import arc.Core;
-import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.util.Time;
 import cudera.world.blocks.HeatedBlock;
@@ -12,13 +9,9 @@ import mindustry.gen.WeatherState;
 import mindustry.type.weather.ParticleWeather;
 
 // Damages blocks every damageTime frames.
-// The majority of this code is by sh1penfire and uujuju/Liz.
-
-//Nearly completely rewritten by Photon_Gravity, save for the actual damage code bc I'm not the balancer here
+// The majority of this code is by Photon_Gravity.
 
 public class BlizzardWeather extends ParticleWeather {
-    public TextureRegion snowRegion;
-
     public static float time;
     public static float damageTime = 60f;
 
@@ -48,11 +41,5 @@ public class BlizzardWeather extends ParticleWeather {
                 b3.damage(b3.maxHealth/ (6 * Mathf.pow(b3.maxHealth, 0.333f) * Mathf.pow(b3.block.size, 2f)));
             }
         });
-    }
-
-    @Override
-    public void load() {
-        super.load();
-        snowRegion = Core.atlas.find("cudera-snow-buildup");
     }
 }

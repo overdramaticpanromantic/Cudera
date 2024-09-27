@@ -32,15 +32,14 @@ public class HeatedCrafter extends GenericCrafter {
         super.setStats();
         stats.add(CuderaStats.heated, heated);
         if (heated) {
-            stats.add(CuderaStats.heatRadius, heatRadius / 8f, StatUnit.blocks);
+            stats.add(CuderaStats.heatRadius, heatRadius, StatUnit.blocks);
         }
     }
 
     public class HeatedCrafterBuild extends GenericCrafterBuild implements HeatedBlock {
-
         @Override
         public boolean isHeating(float x, float y) {
-            return Mathf.dst(this.x/8, this.y/8, x, y) <= heatRadius;
+            return Mathf.dst(this.x / 8, this.y / 8, x, y) <= heatRadius;
         }
 
         @Override

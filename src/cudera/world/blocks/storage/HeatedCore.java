@@ -44,7 +44,7 @@ public class HeatedCore extends CoreBlock {
         super.setStats();
         stats.add(CuderaStats.heated, heated);
         if (heated) {
-            stats.add(CuderaStats.heatRadius, heatRadius / 8f, StatUnit.blocks);
+            stats.add(CuderaStats.heatRadius, heatRadius, StatUnit.blocks);
         }
     }
 

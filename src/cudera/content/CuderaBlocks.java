@@ -98,7 +98,7 @@ public class CuderaBlocks {
             consumePower(20f / 60f);
 
             heated = true;
-            heatRadius = 24f;
+            heatRadius = 8f;
         }};
         siltStrainer = new Separator("silt-strainer"){{
             requirements(Category.crafting, with(CuderaItems.cyanomite, 15, CuderaItems.polysomate, 10));
@@ -248,7 +248,7 @@ public class CuderaBlocks {
                 consumePower(1.25f);
 
                 heated = true;
-                heatRadius = 28f;
+                heatRadius = 10f;
             }
 
             @Override
@@ -284,7 +284,7 @@ public class CuderaBlocks {
             consumeLiquid(CuderaFluids.lightcrude, 0.1f);
 
             heated = true;
-            heatRadius = 32f;
+            heatRadius = 10f;
         }};
         polymerPress = new HeatedCrafter("polymer-press"){{
             requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.cyanomite, 25));
@@ -387,7 +387,7 @@ public class CuderaBlocks {
             consumePower(1f);
 
             heated = true;
-            heatRadius = 32f;
+            heatRadius = 12f;
         }};
         thermoplastCondenser = new HeatedCrafter("thermoplast-condenser"){{
             requirements(Category.crafting, with(CuderaItems.theoserine, 35, CuderaItems.polymer, 25, CuderaItems.polysomate, 20));
@@ -451,7 +451,7 @@ public class CuderaBlocks {
             consumePower(90f / 60f);
 
             heated = true;
-            heatRadius = 4.5f;
+            heatRadius = 14f;
         }};
         // storage
         coreTide = new HeatedCore("core-tide"){{
@@ -465,7 +465,7 @@ public class CuderaBlocks {
             itemCapacity = 2400;
 
             heated = true;
-            heatRadius = 7.5f;
+            heatRadius = 30f;
         }};
     }
 }

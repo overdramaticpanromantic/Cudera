@@ -16,10 +16,5 @@ public class ShakeCrafter extends HeatedCrafter {
             super.craft();
             Effect.shake(shakeMag, shakeMag, this);
         }
-
-        @Override
-        public boolean isHeated() {
-            return heated;
-        }
     }
 }
