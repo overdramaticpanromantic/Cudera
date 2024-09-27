@@ -451,7 +451,7 @@ public class CuderaBlocks {
             consumePower(90f / 60f);
 
             heated = true;
-            heatRadius = 36f;
+            heatRadius = 4.5f;
         }};
         // storage
         coreTide = new HeatedCore("core-tide"){{
@@ -465,7 +465,7 @@ public class CuderaBlocks {
             itemCapacity = 2400;
 
             heated = true;
-            heatRadius = 60f;
+            heatRadius = 7.5f;
         }};
     }
 }
