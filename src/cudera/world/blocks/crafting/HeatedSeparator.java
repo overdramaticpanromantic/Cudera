@@ -1,33 +1,22 @@
-package cudera.world.blocks.storage;
+package cudera.world.blocks.crafting;
 
-import arc.Core;
 import arc.math.Mathf;
 import cudera.world.blocks.HeatedBlock;
 import cudera.world.meta.CuderaStats;
 import mindustry.Vars;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
-import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.blocks.production.Separator;
 import mindustry.world.meta.StatUnit;
 
-// Literally just CoreBlock but it doesn't take blizzard damage.
-// Anuke, please disable linear filtering by default, I beg of you.
-
-public class HeatedCore extends CoreBlock {
+public class HeatedSeparator extends Separator {
     // Whether this building emits heat or not.
     public boolean heated = false;
     // The radius in which blocks are considered heated alongside this one.
     public float heatRadius = 20f;
 
-    public HeatedCore(String name) {
+    public HeatedSeparator(String name) {
         super(name);
-    }
-
-    @Override
-    public void loadIcon(){
-        super.loadIcon();
-        fullIcon = Core.atlas.find(name + "-full", fullIcon);
-        uiIcon = Core.atlas.find(name + "-ui", fullIcon);
     }
 
     @Override
@@ -47,11 +36,10 @@ public class HeatedCore extends CoreBlock {
         }
     }
 
-    public class HeatedCoreBuild extends CoreBuild implements HeatedBlock {
-
+    public class HeatedSeparatorBuild extends SeparatorBuild implements HeatedBlock {
         @Override
         public boolean isHeating(float x, float y) {
-            return Mathf.dst(this.x/8, this.y/8, x, y) <= heatRadius;
+            return Mathf.dst(this.x / 8, this.y / 8, x, y) <= heatRadius;
         }
 
         @Override
