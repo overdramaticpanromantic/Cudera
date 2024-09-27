@@ -35,7 +35,7 @@ public class HeatedCore extends CoreBlock {
     public void drawPlace(int x, int y, int rotation, boolean valid) {
         super.drawPlace(x, y, rotation, valid);
         if (heated) {
-            Drawf.dashCircle(x * Vars.tilesize + this.offset, y * Vars.tilesize + this.offset, heatRadius, Pal.placing);
+            Drawf.dashCircle(x * Vars.tilesize + this.offset, y * Vars.tilesize + this.offset, heatRadius*8, Pal.placing);
         }
     }
 
@@ -49,14 +49,15 @@ public class HeatedCore extends CoreBlock {
     }
 
     public class HeatedCoreBuild extends CoreBuild implements HeatedBlock {
-        @Override
-        public boolean isHeated() {
-            return heated;
-        }
 
         @Override
         public boolean isHeating(float x, float y) {
-            return Mathf.dst(this.x, this.y, x, y) <= heatRadius;
+            return Mathf.dst(this.x/8, this.y/8, x, y) <= heatRadius;
+        }
+
+        @Override
+        public float getHeatRadius() {
+            return heatRadius;
         }
     }
 }
