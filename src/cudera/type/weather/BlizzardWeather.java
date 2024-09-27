@@ -1,17 +1,20 @@
 package cudera.type.weather;
 
 import arc.Core;
-import arc.math.*;
 import arc.graphics.g2d.TextureRegion;
+import arc.math.Mathf;
 import arc.util.Time;
 import cudera.world.blocks.HeatedBlock;
+import cudera.world.util.BoolMask;
 import mindustry.Vars;
+import mindustry.gen.Building;
+import mindustry.gen.WeatherState;
 import mindustry.type.weather.ParticleWeather;
-import mindustry.gen.*;
-import mindustry.world.Tile;
 
 // Damages blocks every damageTime frames.
 // The majority of this code is by sh1penfire and uujuju/Liz.
+
+//Nearly completely rewritten by Photon_Gravity, save for the actual damage code bc I'm not the balancer here
 
 public class BlizzardWeather extends ParticleWeather {
     public TextureRegion snowRegion;
@@ -29,17 +32,20 @@ public class BlizzardWeather extends ParticleWeather {
         time += Time.delta;
         if (time < damageTime) return;
         time %= damageTime;
+        BoolMask isHeated = new BoolMask(Vars.world.width(), Vars.world.height());
         Vars.world.tiles.each((x, y) -> {
             Building b1 = Vars.world.tile(x, y).build;
             if (b1 == null) return;
-            if (!(b1 instanceof HeatedBlock b2 && b2.isHeated())) {
-                boolean cold = true;
-                for (Tile tile : Vars.world.tiles) {
-                    if (tile.build instanceof HeatedBlock b3 && b3.isHeating(b1.x, b1.y)) cold = false;
-                }
-                if (cold) {
-                    b1.damage(b1.maxHealth / (6 * Mathf.pow(b1.maxHealth, 0.333f) * Mathf.pow(b1.block.size, 2f)));
-                }
+            if (b1 instanceof HeatedBlock) {
+                isHeated.addHeatOfBlock(b1);
+            }
+        });
+
+        Vars.world.tiles.each((x, y) ->{
+            Building b3 = Vars.world.tile(x, y).build;
+            if (b3 == null) return;
+            if (!isHeated.get(x, y)){
+                b3.damage(b3.maxHealth/ (6 * Mathf.pow(b3.maxHealth, 0.333f) * Mathf.pow(b3.block.size, 2f)));
             }
         });
     }
