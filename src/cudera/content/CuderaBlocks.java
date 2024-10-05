@@ -4,6 +4,7 @@ import arc.Core;
 import arc.graphics.Color;
 import arc.math.Interp;
 import cudera.world.blocks.crafting.*;
+import cudera.world.blocks.power.*;
 import cudera.world.blocks.storage.*;
 import cudera.world.draw.*;
 import mindustry.content.Liquids;
@@ -14,6 +15,7 @@ import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.Block;
 import mindustry.world.blocks.environment.*;
+import mindustry.world.blocks.power.*;
 import mindustry.world.consumers.*;
 import mindustry.world.draw.*;
 
@@ -27,6 +29,8 @@ public class CuderaBlocks {
     siltFloor,
     // production
     algalPropagator,
+    // power
+    raycastPylon, capacitorCell, photovoltaicCollector,
     // crafting
     leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
     martensiteHardener, theoserineGalvanizer, petroleumBoiler, thermoplastCondenser, plasteelFoundry,
@@ -75,6 +79,23 @@ public class CuderaBlocks {
 
             consumeLiquid(Liquids.water, 0.1f);
             consumePower(24f / 60f);
+        }};
+        // power
+        raycastPylon = new RaycastPylon("raycast-pylon"){{
+            requirements(Category.power, with(CuderaItems.cyanomite, 12));
+            size = 1;
+            health = 120;
+        }};
+        capacitorCell = new Battery("capacitor-cell"){{
+            requirements(Category.power, with(CuderaItems.cyanomite, 25));
+            size = 2;
+            health = 260;
+        }};
+        photovoltaicCollector = new MergePanel("photovoltaic-collector"){{
+            requirements(Category.power, with(CuderaItems.cyanomite, 20));
+            size = 1;
+            health = 140;
+            powerProduction = 0.2f;
         }};
         // crafting
         leucoferriteKiln = new HeatedCrafter("leucoferrite-kiln"){{
