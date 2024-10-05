@@ -39,6 +39,7 @@ public class RaycastPylon extends BeamNode {
     public RaycastPylon(String name) {
         super(name);
         rotate = true;
+        rotateDraw = false;
     }
 
     @Override
