@@ -90,6 +90,9 @@ public class CuderaBlocks {
             requirements(Category.power, with(CuderaItems.cyanomite, 25));
             size = 2;
             health = 260;
+            baseExplosiveness = 2f;
+
+            consumePowerBuffered(6000f);
         }};
         photovoltaicCollector = new MergePanel("photovoltaic-collector"){{
             requirements(Category.power, with(CuderaItems.cyanomite, 20));
