@@ -84,6 +84,7 @@ public class CuderaBlocks {
         raycastPylon = new RaycastPylon("raycast-pylon"){{
             requirements(Category.power, with(CuderaItems.cyanomite, 12));
             size = 1;
+            range = 11;
             health = 120;
         }};
         capacitorCell = new Battery("capacitor-cell"){{

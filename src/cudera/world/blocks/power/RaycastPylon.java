@@ -6,8 +6,10 @@ import arc.graphics.g2d.TextureRegion;
 import arc.math.Mathf;
 import arc.math.geom.Geometry;
 import arc.struct.Seq;
+import arc.util.Eachable;
 import mindustry.Vars;
 import mindustry.core.Renderer;
+import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Layer;
@@ -40,6 +42,7 @@ public class RaycastPylon extends BeamNode {
         super(name);
         rotate = true;
         rotateDraw = false;
+        drawArrow = false;
     }
 
     @Override
@@ -53,7 +56,16 @@ public class RaycastPylon extends BeamNode {
     }
 
     @Override
+    public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list) {
+        super.drawPlanRegion(plan, list);
+        Draw.rect(plan.block.region, plan.x, plan.y);
+        Draw.rect(plan.rotation < 2 ? ((RaycastPylon)(plan.block)).directionRegions[0] : ((RaycastPylon)(plan.block)).directionRegions[1], plan.x, plan.y, plan.rotation * 90);
+    }
+
+    @Override
     public void drawPlace(int x, int y, int rotation, boolean valid){
+        Draw.rect(region, x, y);
+        Draw.rect(rotation < 2 ? this.directionRegions[0] : this.directionRegions[1], x, y, rotation * 90);
         int maxLen = range + size/2;
         Building dest = null;
         Seq<Building> pierced = new Seq<>();
@@ -207,7 +219,7 @@ public class RaycastPylon extends BeamNode {
                         og.reflow(prev);
                     }
                 }
-                if(prevPierced != null){
+                // if(prevPierced != null){
                     for(int i = 0; i < prevPierced.size; i++){
                         if(prevPierced.get(i) != null){
                             prevPierced.get(i).power.links.removeValue(pos());
@@ -224,7 +236,7 @@ public class RaycastPylon extends BeamNode {
                             }
                         }
                     }
-                }
+                // }
 
 
                 //linked to a new one, connect graphs
