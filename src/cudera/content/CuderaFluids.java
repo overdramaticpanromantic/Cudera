@@ -7,9 +7,9 @@ import mindustry.type.Liquid;
 public class CuderaFluids {
     public static Liquid
     // liquid
-    solute, lightcrude, naphtha, petroleum,
+    solute, lightcrude, petroleum,
     // gas
-    dihydrate, dripgas;
+    dihydrate;
 
     public static void load(){
         // liquid
@@ -28,13 +28,6 @@ public class CuderaFluids {
             viscosity = 0.6f;
             flammability = 0.3f;
         }};
-        naphtha = new Liquid("naphtha"){{
-            color = CuderaPalette.naphthaLight;
-            gasColor = Color.valueOf("cfb4e1");
-            coolant = false;
-            boilPoint = 0.85f;
-            viscosity = 0.65f;
-        }};
         petroleum = new Liquid("petroleum"){{
             color = CuderaPalette.petroleumMid;
             gasColor = Color.valueOf("ead9af");
@@ -49,12 +42,6 @@ public class CuderaFluids {
             gas = true;
             color = CuderaPalette.dihydrateLight;
             coolant = false;
-        }};
-        dripgas = new Liquid("dripgas"){{
-            gas = true;
-            color = CuderaPalette.dripgasLight;
-            coolant = false;
-            flammability = 0.4f;
         }};
     }
 }

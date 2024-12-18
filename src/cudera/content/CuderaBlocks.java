@@ -1,6 +1,5 @@
 package cudera.content;
 
-import arc.Core;
 import arc.graphics.Color;
 import arc.math.Interp;
 import cudera.world.blocks.crafting.*;
@@ -32,8 +31,8 @@ public class CuderaBlocks {
     // power
     raycastPylon, capacitorCell, photovoltaicCollector, biosyntheticGenerator,
     // crafting
-    leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
-    martensiteHardener, theoserineGalvanizer, petroleumBoiler, thermoplastCondenser, plasteelFoundry,
+    biosiltStrainer, leucoferriteKiln, vitriniteCompactor, theoserineGalvanizer, dihydrateAcidifier, aragoniteDissolver,
+    quartzRecrystallizer, lightcrudeProcessor, petroleumBoiler, polymerPress, martensiteHardener, plasteelFoundry,
     // storage
     coreTide;
 
@@ -50,7 +49,7 @@ public class CuderaBlocks {
         algalPropagator = new HeatedCrafter("algal-propagator"){{
             Color col1 = Color.valueOf("0f481c");
             Color col2 = Color.valueOf("3ba350");
-            requirements(Category.production, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 10));
+            requirements(Category.production, with(CuderaItems.cyanomite, 50, CuderaItems.leucoferrite, 40));
             outputItem = new ItemStack(CuderaItems.algae, 1);
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
@@ -132,16 +131,35 @@ public class CuderaBlocks {
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.05f;
 
-            consumeLiquid(Liquids.water, 0.2f);
+            consumeLiquid(Liquids.water, 1f);
             consume(new ConsumeItemFlammable(0.5f));
 
             heated = true;
             heatRadius = 8f;
         }};
         // crafting
+        biosiltStrainer = new HeatedSeparator("biosilt-strainer"){{
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 35));
+            results = with(CuderaItems.anthracite, 1, CuderaItems.vitrinite, 1);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(Liquids.water, 1f),
+                    new DrawRegion("-spinner", 1, true),
+                    new DrawDefault()
+            );
+            size = 2;
+            health = 170;
+            craftTime = 30f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = false;
+
+            consumeItem(CuderaItems.biosilt, 1);
+            consumeLiquid(Liquids.water, 0.5f);
+        }};
         leucoferriteKiln = new HeatedCrafter("leucoferrite-kiln"){{
-            requirements(Category.crafting, with(CuderaItems.cyanomite, 20));
-            outputItems = with(CuderaItems.leucoferrite, 3, CuderaItems.polysomate, 2);
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 45, CuderaItems.anthracite, 40));
+            outputItem = new ItemStack(CuderaItems.leucoferrite, 8);
             drawer = new DrawMulti(
                 new DrawDefault(),
                 new DrawFlame(Color.valueOf("ffc099"))
@@ -154,34 +172,15 @@ public class CuderaBlocks {
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.04f;
 
-            consumeItem(CuderaItems.cyanomite, 5);
+            consumeItem(CuderaItems.cyanomite, 8);
             consumePower(20f / 60f);
 
             heated = true;
             heatRadius = 8f;
         }};
-        siltStrainer = new HeatedSeparator("silt-strainer"){{
-            requirements(Category.crafting, with(CuderaItems.polysomate, 15, CuderaItems.cyanomite, 10));
-            results = with(CuderaItems.anthracite, 3, CuderaItems.vitrinite, 1);
-            drawer = new DrawMulti(
-                new DrawRegion("-bottom"),
-                new DrawLiquidTile(Liquids.water, 1f),
-                new DrawRegion("-spinner", 1, true),
-                new DrawDefault()
-            );
-            size = 2;
-            health = 170;
-            craftTime = 60f;
-            hasItems = true;
-            hasLiquids = true;
-            hasPower = false;
-
-            consumeItem(CuderaItems.silt, 1);
-            consumeLiquid(Liquids.water, 0.1f);
-        }};
         vitriniteCompactor = new ShakeCrafter("vitrinite-compactor"){{
-            requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.cyanomite, 15));
-            outputItem = new ItemStack(CuderaItems.vitrinite, 2);
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 50, CuderaItems.leucoferrite, 35));
+            outputItem = new ItemStack(CuderaItems.vitrinite, 4);
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
                 new DrawHammers(){{
@@ -202,207 +201,11 @@ public class CuderaBlocks {
             ambientSound = Sounds.grinding;
             ambientSoundVolume = 0.05f;
 
-            consumeItems(with(CuderaItems.anthracite, 1, CuderaItems.algae, 1));
-        }};
-        dihydrateAcidifier = new HeatedCrafter("dihydrate-acidifier"){{
-            requirements(Category.crafting, with(CuderaItems.leucoferrite, 20, CuderaItems.polysomate, 15));
-            outputLiquid = new LiquidStack(CuderaFluids.dihydrate, 0.1f);
-            drawer = new DrawMulti(
-                new DrawRegion("-bottom"),
-                new DrawLiquidTile(CuderaFluids.dihydrate, 1f),
-                new DrawBubbles(){{
-                    color = Color.valueOf("c3bec2");
-                    amount = 8;
-                }},
-                new DrawDefault()
-            );
-            size = 2;
-            health = 215;
-            craftTime = 240f;
-            hasItems = true;
-            hasLiquids = true;
-            hasPower = true;
-            ambientSound = CuderaSounds.bubbling;
-            ambientSoundVolume = 0.025f;
-
-            consumeItem(CuderaItems.anthracite, 5);
-            consumeLiquid(Liquids.water, 0.1f);
-            consumePower(36f / 60f);
-        }};
-        aragoniteDissolver = new HeatedCrafter("aragonite-dissolver"){{
-            requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.leucoferrite, 15));
-            outputLiquid = new LiquidStack(CuderaFluids.solute, 0.1f);
-            drawer = new DrawMulti(
-                new DrawRegion("-bottom"),
-                new DrawLiquidTile(CuderaFluids.solute, 1f),
-                new DrawDefault()
-            );
-            size = 3;
-            health = 260;
-            craftTime = 60f / (10f / 6f);
-            hasItems = true;
-            hasLiquids = true;
-            hasPower = true;
-            liquidCapacity = 18;
-            ambientSound = Sounds.machine;
-            ambientSoundVolume = 0.05f;
-
-            consumeItem(CuderaItems.aragonite, 1);
-            consumeLiquid(CuderaFluids.dihydrate, 0.4f / 3f);
-            consumePower(1f);
-        }};
-        quartzRecrystallizer = new HeatedCrafter("quartz-recrystallizer"){{
-            requirements(Category.crafting, with(CuderaItems.anthracite, 25, CuderaItems.polysomate, 20));
-            outputItem = new ItemStack(CuderaItems.quartz, 1);
-            drawer = new DrawMulti(
-                new DrawRegion("-bottom"),
-                new DrawLiquidTile(CuderaFluids.solute, 1f),
-                new DrawDefault()
-            );
-            size = 3;
-            health = 285;
-            craftTime = 60f;
-            hasItems = false;
-            hasLiquids = true;
-            hasPower = true;
-            liquidCapacity = 24;
-            ambientSound = Sounds.extractLoop;
-            ambientSoundVolume = 0.08f;
-
-            consumeLiquid(CuderaFluids.solute, 0.06f);
-            consumePower(1f);
-        }};
-        lightcrudeProcessor = new HeatedCrafter("lightcrude-processor"){
-            {
-                requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.polysomate, 25, CuderaItems.cyanomite, 15));
-                outputLiquids = LiquidStack.with(CuderaFluids.lightcrude, 0.2f, CuderaFluids.dripgas, 0.1f);
-                drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
-                    new DrawBubbles(){{
-                        color = CuderaFluids.lightcrude.gasColor;
-                        amount = 6;
-                        spread = 5f;
-                    }},
-                    new DrawDefault(),
-                    new DrawLiquidOutputs()
-                );
-                size = 3;
-                health = 310;
-                craftTime = 36f;
-                rotate = true;
-                rotateDraw = false;
-                invertFlip = true;
-                regionRotated1 = 2;
-                liquidOutputDirections = new int[]{1, 3};
-                hasItems = true;
-                hasLiquids = true;
-                hasPower = true;
-                itemCapacity = 12;
-                liquidCapacity = 36;
-                dumpExtraLiquid = false;
-                ambientSound = Sounds.extractLoop;
-                ambientSoundVolume = 0.08f;
-
-                consumeItem(CuderaItems.vitrinite, 1);
-                consumePower(1.25f);
-
-                heated = true;
-                heatRadius = 10f;
-            }
-
-            @Override
-            public void loadIcon(){
-                super.loadIcon();
-                fullIcon = Core.atlas.find(name + "-full", fullIcon);
-                uiIcon = Core.atlas.find(name + "-ui", fullIcon);
-            }
-        };
-        naphthaDistiller = new HeatedCrafter("naphtha-distiller"){{
-            requirements(Category.crafting, with(CuderaItems.quartz, 45, CuderaItems.leucoferrite, 40));
-            outputLiquid = new LiquidStack(CuderaFluids.naphtha, 0.1f);
-            drawer = new DrawMulti(
-                new DrawRegion("-bottom"),
-                new DrawLiquidTile(CuderaFluids.naphtha, 1f),
-                new DrawDefault(),
-                new DrawGlowRegion(){{
-                    color = Color.valueOf("9269ad");
-                }}
-            );
-            size = 3;
-            health = 340;
-            craftTime = 120f;
-            hasItems = true;
-            hasLiquids = true;
-            hasPower = false;
-            itemCapacity = 6;
-            liquidCapacity = 24;
-            ambientSound = Sounds.glow;
-            ambientSoundVolume = 0.07f;
-
-            consume(new ConsumeItemFlammable(0.5f));
-            consumeLiquid(CuderaFluids.lightcrude, 0.1f);
-
-            heated = true;
-            heatRadius = 11f;
-        }};
-        polymerPress = new HeatedCrafter("polymer-press"){{
-            requirements(Category.crafting, with(CuderaItems.quartz, 30, CuderaItems.cyanomite, 25));
-            outputItem = new ItemStack(CuderaItems.polymer, 1);
-            drawer = new DrawMulti(
-                new DrawRegion("-bottom"),
-                new DrawLiquidTile(CuderaFluids.naphtha, 1f),
-                new DrawDefault(),
-                new DrawPress(){{
-                    progress = a -> Interp.sine.apply(Interp.slope.apply(a));
-                }}
-            );
-            craftEffect = CuderaEffects.polymerSquish;
-            size = 2;
-            health = 260;
-            craftTime = 120f;
-            hasItems = true;
-            hasLiquids = true;
-            hasPower = true;
-            itemCapacity = 8;
-            liquidCapacity = 12;
-            ambientSound = Sounds.bioLoop;
-            ambientSoundVolume = 0.06f;
-
-            consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dihydrate, 0.05f));
-            consumePower(40f / 60f);
-        }};
-        martensiteHardener = new HeatedCrafter("martensite-hardener"){{
-            requirements(Category.crafting, with(CuderaItems.leucoferrite, 55, CuderaItems.quartz, 40, CuderaItems.polymer, 30));
-            outputItem = new ItemStack(CuderaItems.martensite, 1);
-            drawer = new DrawMulti(
-                new DrawRegion("-bottom"),
-                new DrawCells(){{
-                    range = 12f;
-                    particles = 20;
-                    color = Color.valueOf("4655aa");
-                    particleColorFrom = Color.valueOf("5981d7");
-                    particleColorTo = Color.valueOf("5981d7");
-                }},
-                new DrawDefault()
-            );
-            size = 3;
-            health = 360;
-            craftTime = 24f;
-            hasItems = true;
-            hasLiquids = true;
-            hasPower = false;
-            itemCapacity = 15;
-            liquidCapacity = 12;
-            ambientSound = Sounds.electricHum;
-            ambientSoundVolume = 0.08f;
-
-            consumeItems(ItemStack.with(CuderaItems.leucoferrite, 2, CuderaItems.anthracite, 1));
-            consumeLiquid(Liquids.water, 0.2f);
+            consumeItems(with(CuderaItems.anthracite, 1, CuderaItems.algae, 2));
         }};
         theoserineGalvanizer = new HeatedCrafter("theoserine-galvanizer"){{
-            requirements(Category.crafting, with(CuderaItems.quartz, 50, CuderaItems.polymer, 45, CuderaItems.martensite, 30));
-            outputItem = new ItemStack(CuderaItems.theoserine, 2);
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 65, CuderaItems.polysomate, 50));
+            outputItem = new ItemStack(CuderaItems.theoserine, 3);
             drawer = new DrawMulti(
                 new DrawDefault(),
                 new DrawFlameButItHasOffsetsBecauseIDontWannaSwapToBleedingEdge(Color.valueOf("ffef99")){{
@@ -437,31 +240,129 @@ public class CuderaBlocks {
             craftEffect = CuderaEffects.smeltSmokeHuge;
             size = 3;
             health = 410;
-            craftTime = 120f;
+            craftTime = 90f;
             hasItems = true;
             hasLiquids = false;
             hasPower = true;
             ambientSound = Sounds.smelter;
             ambientSoundVolume = 0.05f;
 
-            consumeItems(ItemStack.with(CuderaItems.martensite, 1, CuderaItems.polysomate, 2));
+            consumeItems(ItemStack.with(CuderaItems.leucoferrite, 1, CuderaItems.polysomate, 2));
             consumePower(36f / 60f);
 
             heated = true;
             heatRadius = 13f;
         }};
-        petroleumBoiler = new HeatedCrafter("petroleum-boiler"){{
-            requirements(Category.crafting, with(CuderaItems.polymer, 40, CuderaItems.martensite, 35));
-            outputLiquid = new LiquidStack(CuderaFluids.petroleum, 0.1f);
+        dihydrateAcidifier = new HeatedCrafter("dihydrate-acidifier"){{
+            requirements(Category.crafting, with(CuderaItems.polysomate, 40, CuderaItems.theoserine, 30));
+            outputLiquid = new LiquidStack(CuderaFluids.dihydrate, 0.6f);
             drawer = new DrawMulti(
                 new DrawRegion("-bottom"),
-                new DrawLiquidTile(CuderaFluids.petroleum, 1f),
+                new DrawLiquidTile(CuderaFluids.dihydrate, 1f),
                 new DrawBubbles(){{
-                    color = CuderaFluids.petroleum.gasColor;
+                    color = Color.valueOf("c3bec2");
+                    amount = 8;
+                }},
+                new DrawDefault()
+            );
+            size = 2;
+            health = 215;
+            craftTime = 240f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            ambientSound = CuderaSounds.bubbling;
+            ambientSoundVolume = 0.025f;
+
+            consumeItem(CuderaItems.anthracite, 6);
+            consumeLiquid(Liquids.water, 0.4f);
+            consumePower(36f / 60f);
+        }};
+        aragoniteDissolver = new HeatedCrafter("aragonite-dissolver"){{
+            requirements(Category.crafting, with(CuderaItems.anthracite, 70, CuderaItems.leucoferrite, 55, CuderaItems.theoserine, 45));
+            outputLiquid = new LiquidStack(CuderaFluids.solute, 1f);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.solute, 1f),
+                new DrawDefault()
+            );
+            size = 3;
+            health = 260;
+            craftTime = 60f / (10f / 6f);
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            liquidCapacity = 18;
+            ambientSound = Sounds.machine;
+            ambientSoundVolume = 0.05f;
+
+            consumeItem(CuderaItems.aragonite, 2);
+            consumeLiquid(CuderaFluids.dihydrate, 0.4f);
+            consumePower(1f);
+        }};
+        quartzRecrystallizer = new HeatedCrafter("quartz-recrystallizer"){{
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 85, CuderaItems.polysomate, 75, CuderaItems.aragonite, 60));
+            outputItem = new ItemStack(CuderaItems.quartz, 3);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.solute, 1f),
+                new DrawDefault()
+            );
+            size = 3;
+            health = 285;
+            craftTime = 90f;
+            hasItems = false;
+            hasLiquids = true;
+            hasPower = true;
+            liquidCapacity = 24;
+            ambientSound = Sounds.extractLoop;
+            ambientSoundVolume = 0.08f;
+
+            consumeLiquid(CuderaFluids.solute, 0.5f);
+            consumePower(1.25f);
+        }};
+        lightcrudeProcessor = new HeatedCrafter("lightcrude-processor"){{
+            requirements(Category.crafting, with(CuderaItems.leucoferrite, 75, CuderaItems.theoserine, 70, CuderaItems.quartz, 60));
+            outputLiquid = new LiquidStack(CuderaFluids.lightcrude, 1f);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.lightcrude, 1f),
+                new DrawBubbles(){{
+                    color = CuderaFluids.lightcrude.gasColor;
                     amount = 6;
                     spread = 5f;
                 }},
                 new DrawDefault()
+            );
+            size = 3;
+            health = 310;
+            craftTime = 40f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            itemCapacity = 12;
+            liquidCapacity = 36;
+            ambientSound = Sounds.extractLoop;
+            ambientSoundVolume = 0.08f;
+
+            consumeItem(CuderaItems.vitrinite, 1);
+            consumePower(1.5f);
+
+            heated = true;
+            heatRadius = 10f;
+        }};
+        petroleumBoiler = new HeatedCrafter("petroleum-boiler"){{
+            requirements(Category.crafting, with(CuderaItems.anthracite, 90, CuderaItems.polysomate, 80, CuderaItems.aragonite, 65, CuderaItems.quartz, 55));
+            outputLiquid = new LiquidStack(CuderaFluids.petroleum, 0.8f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawLiquidTile(CuderaFluids.petroleum, 1f),
+                    new DrawBubbles(){{
+                        color = CuderaFluids.petroleum.gasColor;
+                        amount = 6;
+                        spread = 5f;
+                    }},
+                    new DrawDefault()
             );
             size = 3;
             health = 380;
@@ -473,39 +374,69 @@ public class CuderaBlocks {
             ambientSound = Sounds.extractLoop;
             ambientSoundVolume = 0.06f;
 
-            consumeLiquids(LiquidStack.with(CuderaFluids.naphtha, 0.1f, CuderaFluids.dripgas, 0.05f));
-            consumePower(1f);
+            consumeLiquids(LiquidStack.with(CuderaFluids.lightcrude, 0.8f));
+            consumePower(1.5f);
 
             heated = true;
             heatRadius = 13f;
         }};
-        thermoplastCondenser = new HeatedCrafter("thermoplast-condenser"){{
-            requirements(Category.crafting, with(CuderaItems.polysomate, 35, CuderaItems.polymer, 25, CuderaItems.theoserine, 20));
-            outputItem = new ItemStack(CuderaItems.thermoplast, 1);
+        polymerPress = new HeatedCrafter("polymer-press"){{
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 55, CuderaItems.theoserine, 40, CuderaItems.quartz, 30));
+            outputItem = new ItemStack(CuderaItems.polymer, 4);
             drawer = new DrawMulti(
-                    new DrawRegion("-bottom"),
-                    new DrawLiquidTile(CuderaFluids.petroleum, 1f),
-                    new DrawDefault()
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(CuderaFluids.petroleum, 1f),
+                new DrawDefault(),
+                new DrawPress(){{
+                    progress = a -> Interp.sine.apply(Interp.slope.apply(a));
+                }}
             );
-            craftEffect = CuderaEffects.thermoplastCraft;
+            craftEffect = CuderaEffects.polymerSquish;
             size = 2;
-            health = 320;
-            craftTime = 60f;
+            health = 260;
+            craftTime = 120f;
             hasItems = true;
             hasLiquids = true;
             hasPower = true;
-            itemCapacity = 6;
+            itemCapacity = 8;
             liquidCapacity = 12;
-            ambientSound = Sounds.machine;
+            ambientSound = Sounds.bioLoop;
             ambientSoundVolume = 0.06f;
 
-            consumeItem(CuderaItems.quartz, 1);
-            consumeLiquid(CuderaFluids.petroleum, 0.1f);
+            consumeLiquids(LiquidStack.with(CuderaFluids.petroleum, 0.5f, CuderaFluids.dihydrate, 1f / 3f));
             consumePower(1f);
         }};
+        martensiteHardener = new HeatedCrafter("martensite-hardener"){{
+            requirements(Category.crafting, with(CuderaItems.cyanomite, 115, CuderaItems.leucoferrite, 100, CuderaItems.quartz, 90, CuderaItems.polymer, 75));
+            outputItem = new ItemStack(CuderaItems.martensite, 3);
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawCells(){{
+                    range = 12f;
+                    particles = 20;
+                    color = Color.valueOf("4655aa");
+                    particleColorFrom = Color.valueOf("5981d7");
+                    particleColorTo = Color.valueOf("5981d7");
+                }},
+                new DrawDefault()
+            );
+            size = 3;
+            health = 360;
+            craftTime = 90f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = false;
+            itemCapacity = 15;
+            liquidCapacity = 180;
+            ambientSound = Sounds.electricHum;
+            ambientSoundVolume = 0.08f;
+
+            consumeItems(ItemStack.with(CuderaItems.leucoferrite, 2, CuderaItems.theoserine, 1));
+            consumeLiquid(Liquids.water, 1.5f);
+        }};
         plasteelFoundry = new HeatedCrafter("plasteel-foundry"){{
-            requirements(Category.crafting, with(CuderaItems.quartz, 65, CuderaItems.martensite, 50, CuderaItems.thermoplast, 45));
-            outputItem = new ItemStack(CuderaItems.plasteel, 2);
+            requirements(Category.crafting, with(CuderaItems.anthracite, 140, CuderaItems.polysomate, 125, CuderaItems.aragonite, 115, CuderaItems.quartz, 100, CuderaItems.polymer, 90, CuderaItems.martensite, 75));
+            outputItem = new ItemStack(CuderaItems.plasteel, 10);
             drawer = new DrawMulti(
                     new DrawRegion("-bottom"),
                     new DrawCrucibleFlame(),
@@ -527,25 +458,22 @@ public class CuderaBlocks {
             }};
             size = 3;
             health = 420;
-            craftTime = 90f;
+            craftTime = 300f;
             hasItems = true;
-            hasLiquids = true;
             hasPower = true;
-            itemCapacity = 12;
-            liquidCapacity = 12;
+            itemCapacity = 24;
             ambientSound = CuderaSounds.plasteelHum;
             ambientSoundVolume = 0.06f;
 
-            consumeItems(ItemStack.with(CuderaItems.martensite, 2, CuderaItems.thermoplast, 2));
-            consumeLiquid(CuderaFluids.dihydrate, 0.1f);
-            consumePower(90f / 60f);
+            consumeItems(ItemStack.with(CuderaItems.polysomate, 6, CuderaItems.martensite, 4, CuderaItems.polymer, 4));
+            consumePower(2f);
 
             heated = true;
             heatRadius = 15f;
         }};
         // storage
         coreTide = new HeatedCore("core-tide"){{
-            requirements(Category.effect, with(CuderaItems.cyanomite, 650, CuderaItems.leucoferrite, 550, CuderaItems.polysomate, 450));
+            requirements(Category.effect, with(CuderaItems.cyanomite, 650, CuderaItems.leucoferrite, 550));
             size = 2;
             alwaysUnlocked = true;
             // unitType = CuderaUnits.gale

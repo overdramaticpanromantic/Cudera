@@ -23,12 +23,6 @@ public class CuderaEffects {
             Fill.square(e.x + x, e.y + y, e.fout() * 2f + 0.5f, 0);
         });
     }),
-    thermoplastCraft = new Effect(24, e -> {
-        randLenVectors(e.id, 8, 4f + e.fin() * 8f, (x, y) -> {
-            color(CuderaPalette.thermoplastLight);
-            Fill.square(e.x + x, e.y + y, e.fout() * 2f + 0.5f, 45);
-        });
-    }),
     smeltSmokeHuge = new Effect(20, e -> {
         randLenVectors(e.id, 12, 6f + e.fin() * 5f, (x, y) -> {
             color(Color.white, e.color, e.fin());
