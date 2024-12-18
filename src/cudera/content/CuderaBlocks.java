@@ -30,7 +30,7 @@ public class CuderaBlocks {
     // production
     algalPropagator,
     // power
-    raycastPylon, capacitorCell, photovoltaicCollector,
+    raycastPylon, capacitorCell, photovoltaicCollector, biosyntheticGenerator,
     // crafting
     leucoferriteKiln, siltStrainer, vitriniteCompactor, dihydrateAcidifier, aragoniteDissolver, quartzRecrystallizer, lightcrudeProcessor, naphthaDistiller, polymerPress,
     martensiteHardener, theoserineGalvanizer, petroleumBoiler, thermoplastCondenser, plasteelFoundry,
@@ -100,6 +100,43 @@ public class CuderaBlocks {
             size = 1;
             health = 140;
             powerProduction = 0.2f;
+        }};
+        biosyntheticGenerator = new HeatedConsumeGenerator("biosynthetic-generator"){{
+            requirements(Category.power, with(CuderaItems.cyanomite, 35, CuderaItems.polysomate, 15));
+            drawer = new DrawMulti(
+                new DrawRegion("-bottom"),
+                new DrawLiquidTile(Liquids.water, 1f),
+                new DrawDefault()
+            );
+            generateEffect = new ParticleEffect(){{
+                particles = 1;
+                colorFrom = Color.valueOf("2d2820").a(0.8f);
+                colorTo = Color.valueOf("45413b").a(0f);
+                interp = Interp.fade;
+                cone = 20f;
+                length = 40f;
+                lifetime = 300f;
+                baseRotation = 65f;
+                sizeFrom = 2f;
+                sizeTo = 3f;
+            }};
+            generateEffectRange = 0f;
+            effectChance = 0.4f;
+            size = 2;
+            health = 240;
+            powerProduction = 5f;
+            itemDuration = 120f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            ambientSound = Sounds.smelter;
+            ambientSoundVolume = 0.05f;
+
+            consumeLiquid(Liquids.water, 0.2f);
+            consume(new ConsumeItemFlammable(0.5f));
+
+            heated = true;
+            heatRadius = 8f;
         }};
         // crafting
         leucoferriteKiln = new HeatedCrafter("leucoferrite-kiln"){{
