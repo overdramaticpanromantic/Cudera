@@ -22,7 +22,7 @@ public class HeatedConsumeGenerator extends ConsumeGenerator {
     @Override
     public void drawPlace(int x, int y, int rotation, boolean valid) {
         super.drawPlace(x, y, rotation, valid);
-        if (heated) {
+        if (heated && heatRadius > 0f) {
             Drawf.dashCircle(x * Vars.tilesize + this.offset, y * Vars.tilesize + this.offset, heatRadius*8, Pal.placing);
         }
     }
@@ -31,7 +31,7 @@ public class HeatedConsumeGenerator extends ConsumeGenerator {
     public void setStats() {
         super.setStats();
         stats.add(CuderaStats.heated, heated);
-        if (heated) {
+        if (heated && heatRadius > 0f) {
             stats.add(CuderaStats.heatRadius, heatRadius, StatUnit.blocks);
         }
     }

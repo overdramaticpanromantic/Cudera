@@ -18,10 +18,12 @@ public class CuderaPalette {
     polymerLight = Color.valueOf("e48a95"),
     martensiteLight = Color.valueOf("a0b0e1"),
     plasteelLight = Color.valueOf("95d6dd"),
+
     // liquid
     lightcrudeLight = Color.valueOf("92918c"),
-    // midtone for readability in conduits
     petroleumMid = Color.valueOf("c1a158"),
+    naphthaLight = Color.valueOf("bd8cde"),
     // gas
-    dihydrateLight = Color.valueOf("ffffff");
+    dihydrateLight = Color.valueOf("ffffff"),
+    hydrofluxLight = Color.valueOf("90a2ab");
 }

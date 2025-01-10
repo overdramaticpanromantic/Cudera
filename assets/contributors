@@ -2,10 +2,10 @@ SOUNDS
 bubbling.ogg by MattJ99 -- https://freesound.org/s/66786/ -- License: Attribution 3.0
 
 SPRITES
-twcash01
+twcash01 - Environmental blocks
 
 CODE
-uujuju/Liz
-sh1penfire
-Photon_Gravity
-GlennFolker
+uujuju/Liz - Assorted help and troubleshooting
+sh1penfire - Progression revamp advice and troubleshooting
+Photon_Gravity - About every mechanic in the mod, lol
+GlennFolker - Help with bitmasking and assorted help
